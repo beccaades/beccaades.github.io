@@ -3,7 +3,7 @@
   <title><![CDATA[Category: Flatiron | A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/blog/categories/flatiron/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-06-22T01:13:27-04:00</updated>
+  <updated>2015-06-22T01:44:17-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -30,7 +30,7 @@
 <p>It's always MY fault.  Like there's some sort of magic fairy dust sprinkled on <em>everyone else's</em> computer except *hers*. She even got an instructor to help her this time. Wow.  They are going to be in for a tasty treat--look what she put in!</p>
 
 
-<pre><code class="ruby">evil_pokemons.each do
+<pre><code class="ruby">evil_pokemons.each do |pokemons|
 Pretty Please scrape the pokemons for me!!!!!
 end
 </code></pre>
