@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[Category: Flatiron | A Coder's Journey]]></title>
+
+  <title><![CDATA[Category: flatiron | A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/blog/categories/flatiron/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-06-22T01:44:17-04:00</updated>
+  <updated>2015-07-05T22:46:04-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -11,6 +12,111 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Blog Post #3 or... "What I Did Over My Summer Vacation!"]]></title>
+    <link href="http://beccaades.github.io/blog/2015/07/05/what-i-did-over-my-summer-vacation/"/>
+    <updated>2015-07-05T15:54:45-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/07/05/what-i-did-over-my-summer-vacation</id>
+    <content type="html"><![CDATA[<p><img class="center" src="http://beccaades.github.io/images/recall.png"></p>
+
+<p><font color="blue"> I <strong> love </strong> Sinatra. </font></p>
+
+
+<p><font color="green"> I love the interactivity.</font></P>
+
+
+<p><font color="orange"> I love the creativity. How you can create a web application, and <strong> BAM </strong>it is there. Tangible.</font></P>
+
+
+<p><font color="red"> So close you can almost touch it. </font></P>
+
+
+<p> So close you can <a href="https://whyevolutionistrue.files.wordpress.com/2014/08/frank-sinatra5.jpg">click on it.</a></p>
+
+
+<p></p>
+
+<p> But I wanted to take it further.  I wanted it to look stylized.  CSS stylized.  So this weekend (my fourth of July summer break!) I set about to accomplish the possible.</p>
+
+
+
+
+<p>I found all this and more on <a href="http://code.tutsplus.com/tutorials/singing-with-sinatra--net-18965">Singing with Sinatra</a>, a website designed specifically to give beginner Ruby programmers an introduction to Sinatra.  Through this three part web series, I was able to supplement my understanding of Sinatra, and complete a fully realized web app for a simple to-do list.  And of course, no web app would be complete without the appropriate styling.</p>
+
+
+
+
+<p><p>CSS styling to be specific.<p>
+<p>To start, I added an erb page at the root of my views directory for the layout: <p></p>
+
+<pre><code class="ruby">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf8"&gt;
+  &lt;title&gt;&lt;%= @title + ' | Recall' %&gt;&lt;/title&gt;
+  &lt;link href='http://beccaades.github.io/reset.css' rel='stylesheet'&gt;
+  &lt;link href='http://beccaades.github.io/style.css' rel='stylesheet'&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;hgroup&gt;
+      &lt;h1&gt;&lt;a href="http://beccaades.github.io/"&gt;Recall&lt;/a&gt;&lt;h1&gt;
+      &lt;h2&gt;'cause you're too busy to remember&lt;/h2&gt;
+    &lt;/hgroup&gt;
+  &lt;/header&gt;
+
+  &lt;div id="main"&gt;
+    &lt;%= yield %&gt;
+  &lt;/div&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&lt;small&gt;An app for &lt;a href="http://net.tutsplus.com"&gt;Nettuts+&lt;/a&gt;.&lt;/small&gt;&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p><p>How does this connect to my other ruby pages you may wonder?  Yield, my friend.  Literally, yield.</p></p>
+
+<p><p>You see the div id with the tag of &ldquo;main&rdquo;?</p></p>
+
+<p><p>Right here:</p></p>
+
+<pre><code class="ruby">  &lt;div id="main"&gt;
+    &lt;%= yield %&gt;
+  &lt;/div&gt;
+</code></pre>
+
+<p><p>This allows the routes (view pages) to be passed in through a block, while also utilizing the id selector to streamline the content <em>stylistically</em> of each and every page my heart desires.</p></p>
+
+<p><p>Another nifty trick, I was looking for was the inclusion of css stylesheets.  Through linking to them in my layout page, I was able to universally style my web recall app.</p></p>
+
+<p><p>I was introduce to something else as well.  Let me show you: </p></p>
+
+<pre><code class="ruby">  &lt;link href='http://beccaades.github.io/reset.css' rel='stylesheet'&gt;
+  &lt;link href='http://beccaades.github.io/style.css' rel='stylesheet'&gt;
+</code></pre>
+
+<p><p>Do you see it?  The reset&ndash;right before the css stylesheet.  That was all new to me.  So I researched&hellip;</p></p>
+
+<p><img src="https://thenypost.files.wordpress.com/2015/04/computer.jpg" alt="Researching" /></p>
+
+<p><p>&hellip;Basically every web browser uses a base stylesheet which somewhat ensures that HTML is rendered <em>reasonably</em> well when custom CSS is not provided.  Unfortunately, each browser uses a different base, and thus enters CSS resets.  A way to strip styles so your elements are rendered consistently across a multitude of browsers.</p></p>
+
+<p><p>One developer, <a href="http://www.sitepoint.com/css-resets-useful-or-useless/">Craig Buckler</a> opposes CSS resets quite simply because he resents the very idea that &ldquo;pixel perfect&rdquo; rendering is actually an achievable goal.  Instead he opts for a simple css reset of: </p></p>
+
+<pre><code class="ruby">  * {padding: 0; margin: 0;}
+</code></pre>
+
+<p><p>So like any budding developer&ndash;I tested it out.  You remember the homepage of my web app I showed you at the beginning? (Just scroll up if it&rsquo;s not <font color="red">PIXEL PERFECT</font> in your mind 😎).  Drumroll please or desperate scream&ndash;after all we are about to strip my app its magic!</p></p>
+
+<p><img class="center <a" src="href="http://www.insite.io/wp-content/uploads/2015/04/animal_drums.jpg">http://www.insite.io/wp-content/uploads/2015/04/animal_drums.jpg</a>">
+<img class="center" src="http://beccaades.github.io/images/recall-no-reset.png"></p>
+
+<p><p>To reset or not reset?  The decision is yours.</p></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[EXCUSE ME!!! My Computer Broke!]]></title>
