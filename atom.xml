@@ -4,7 +4,7 @@
   <title><![CDATA[A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-07-05T22:46:04-04:00</updated>
+  <updated>2015-07-16T19:31:56-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -12,6 +12,259 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Stalk Much?...Cause Rails Does!]]></title>
+    <link href="http://beccaades.github.io/blog/2015/07/15/stalk-much/"/>
+    <updated>2015-07-15T22:39:06-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/07/15/stalk-much</id>
+    <content type="html"><![CDATA[<p>This may not be the most interesting of all stories, but it's one 
+  that need to be told.  That begs to be heard.  And here is me, giving this story it's very 
+  own distinct voice (and thick-framed glasses!). So lets start at the beginning (alas, where most programming stories tend to start), and see if we can't make it through to the other side.  Won't you, my dear reader, come on this journey with me?</p>
+
+
+<p>  <img src="http://falconcove.net/wp-content/uploads/2015/05/OnceUponATime.jpg" alt="Once upon a time" /></p>
+
+<p>  <p>We commence our journey in the darkest of crevices in the route.rb file in our config directory.  Here we need to establish a root directory, and hatch our grandiose session plans.  Yes, there are big things to come! </p></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">root</span> <span class="s1">&#39;posts#index&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">resources</span> <span class="ss">:sessions</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="o">[</span><span class="ss">:create</span><span class="p">,</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">:destoy</span><span class="o">]</span>
+</span><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/signup&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;users#new&#39;</span>
+</span><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/logout&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#destroy&#39;</span>
+</span><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#new&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  <p>Now, we have a sessions directory, and we can begin building our sessions conroller.  To do this, please type the following into your terminal:</p></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rails</span> <span class="n">g</span> <span class="n">controller</span> <span class="n">sessions</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  <p>This will give us a controller, and while we are here&ndash;lets fill out the actions to match our routes:</p></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">new</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  <p>Here we go!</p></p>
+
+<p>   <img src="http://orig07.deviantart.net/90f0/f/2013/287/2/e/at__here_we_go__by_blistinaorgin-d6qf87y.png" alt="Luigi" /></p>
+
+<p>   <p>Quite naturally, in order for our sessions hash to function, we need to give our user the ability to login in from the home page. And in order for a user to truly, believably, and in actuality login, we need to have a method that both logs a user into our web application as well as tracks the users presence on the website.  And how can we access this method and variable from any show page on our website?  For this we need to go to that forbidden place, we have yet to explore.  The application controller.</p></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="c1"># Prevent CSRF attacks by raising an exception.</span>
+</span><span class='line'>  <span class="c1"># For APIs, you may want to use :null_session instead.</span>
+</span><span class='line'>  <span class="n">protect_from_forgery</span> <span class="ss">with</span><span class="p">:</span> <span class="ss">:exception</span>
+</span><span class='line'>  <span class="n">before_action</span> <span class="ss">:login_required</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">#This method checks if we have a user signed in</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">login_required</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">!</span><span class="n">logged_in?</span>
+</span><span class='line'>      <span class="n">redirect_to</span> <span class="n">login_path</span><span class="p">,</span> <span class="ss">:notice</span> <span class="o">=&gt;</span> <span class="s2">&quot;Log in to edit or delete your post&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">logged_in?</span>
+</span><span class='line'>    <span class="o">!!</span><span class="n">current_user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">helper_method</span> <span class="ss">:logged_in?</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">#This method gives us details about our user</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">current_user</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span>
+</span><span class='line'>      <span class="vi">@current_user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@current_user</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="kp">false</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">helper_method</span> <span class="ss">:current_user</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now that we have created our two helper methods, we will be able to access them from anywhere in our views!  But please, let's not get ahead of ourselves.Before we get to the views, we need to make a pit stop at our post controller to make sure it has access to all the necessary information.  Most notably, that we allow a user to visit </p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">skip_before_action</span> <span class="ss">:login_required</span><span class="p">,</span> <span class="ss">:only</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:index</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> So now, finally, we are ready to enter the holy view.  Now one might think, we should go to our post index page.  However, they would be WRONG.  Because we, programmers, are planners.  And we want our user to be able to logout no matter what page they are on.  I mean, really, sessions wants to be AVAILABLE, people.  This means that not only are we going to go in that cute little layouts directory, but also we will be rendering a partial from the application.html.erb file. Whew. That took a lot out of me.</p>
+
+
+
+
+<p>Rendering a partial is super easy, you simply do this within the body of your application.html.erb. </p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;%=</span> <span class="n">render</span> <span class="s1">&#39;layouts/header&#39;</span> <span class="o">%&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>Now, we are embarking on the climax of our tale.  The partial: </p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">% if </span><span class="n">logged_in?</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">Hiya, &lt;%= current_user.name %&gt;</span><span class="o">!</span> <span class="no">You</span><span class="err">&#39;</span><span class="n">re</span> <span class="n">looking</span> <span class="n">mighty</span> <span class="n">fine</span> <span class="n">today!</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sx">%=link_to &quot;Log Out&quot;, logout_path %&gt;</span>
+</span><span class='line'><span class="sx">  &lt;% else %&gt;</span>
+</span><span class='line'><span class="sx">&lt;%=</span> <span class="n">link_to</span> <span class="s2">&quot;Log In&quot;</span><span class="p">,</span> <span class="n">login_path</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">  &lt;% end %&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This allows the user to loggout from every page in our web application, not to mention, a sweet, homey greeting 😎.</p>
+
+
+
+
+<p>But we still have one problem.  How does our session, know who our user is? For this, we will come full circle and revisit our sessions controller.</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SessionsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="n">skip_before_action</span> <span class="ss">:login_required</span><span class="p">,</span> <span class="ss">:only</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:new</span><span class="p">,</span> <span class="ss">:create</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">new</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_email</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">user</span> <span class="o">&amp;&amp;</span> <span class="n">user</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:password</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+</span><span class='line'>        <span class="n">redirect_to</span> <span class="n">root_path</span><span class="p">,</span> <span class="ss">:notice</span> <span class="o">=&gt;</span> <span class="s2">&quot;Welcome back, </span><span class="si">#{</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>        <span class="n">flash</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">alert</span> <span class="o">=</span> <span class="s2">&quot;Invalid email or password&quot;</span>
+</span><span class='line'>        <span class="n">render</span> <span class="s2">&quot;new&quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy</span>
+</span><span class='line'>    <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="kp">nil</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="n">root_path</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="kp">nil</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Like all good tales, there was one quiet character hiding, softly apart from the rest.  The user.id.  And like a wise old woman, who knows all, but is soft spoken, she hid away in the sessions create action.  Yet without this one line of code "session[:user_id] = user.id, our entire sessions hash would break and fall apart.  It's the link between the two controllers, between our database and our models, and also, the link between our application, and our user.</p>
+
+
+<p><img src="http://www.rescuepost.com/.a/6a00d8357f3f2969e201b7c6e9c3ef970b-pi" alt="That's all folks" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Blog Post #3 or... "What I Did Over My Summer Vacation!"]]></title>

@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>A Coder's Journey</title>
+  <title>Stalk Much?...Cause Rails Does! - A Coder's Journey</title>
   <meta name="author" content="Becca Ades">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://beccaades.github.io">
+  <link rel="canonical" href="http://beccaades.github.io/blog/2015/07/15/stalk-much">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="A Coder's Journey" type="application/atom+xml">
@@ -46,7 +46,7 @@
 
 <div class="header-right">
   <ul class="main-navigation">
- <div class="selected"> 
+ <div> 
   <li><a href="/">blog</a></li></div><div class="spacer"></div>
      <div> 
   <li><a href="/projects">projects</a></li></div><div class="spacer"></div>
@@ -61,15 +61,12 @@
 </header>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/07/15/stalk-much/">Stalk Much?...Cause Rails Does!</a></h1>
+      <h1 class="entry-title">Stalk Much?...Cause Rails Does!</h1>
     
     
       <p class="meta">
@@ -92,7 +89,7 @@
   </header>
 
 
-  <div class="entry-content"><p>This may not be the most interesting of all stories, but it's one 
+<div class="entry-content"><p>This may not be the most interesting of all stories, but it's one 
   that need to be told.  That begs to be heard.  And here is me, giving this story it's very 
   own distinct voice (and thick-framed glasses!). So lets start at the beginning (alas, where most programming stories tend to start), and see if we can't make it through to the other side.  Won't you, my dear reader, come on this journey with me?</p>
 
@@ -338,185 +335,16 @@
 
 <p><img src="http://www.rescuepost.com/.a/6a00d8357f3f2969e201b7c6e9c3ef970b-pi" alt="That's all folks" /></p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/07/05/what-i-did-over-my-summer-vacation/">Blog Post #3 or... "What I Did Over My Summer Vacation!"</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Becca Ades</span></span>
 
-<time datetime="2015-07-05T15:54:45-04:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="center" src="/images/recall.png"></p>
-
-<p><font color="blue"> I <strong> love </strong> Sinatra. </font></p>
-
-
-<p><font color="green"> I love the interactivity.</font></P>
-
-
-<p><font color="orange"> I love the creativity. How you can create a web application, and <strong> BAM </strong>it is there. Tangible.</font></P>
-
-
-<p><font color="red"> So close you can almost touch it. </font></P>
-
-
-<p> So close you can <a href="https://whyevolutionistrue.files.wordpress.com/2014/08/frank-sinatra5.jpg">click on it.</a></p>
-
-
-<p></p>
-
-<p> But I wanted to take it further.  I wanted it to look stylized.  CSS stylized.  So this weekend (my fourth of July summer break!) I set about to accomplish the possible.</p>
-
-
-
-
-<p>I found all this and more on <a href="http://code.tutsplus.com/tutorials/singing-with-sinatra--net-18965">Singing with Sinatra</a>, a website designed specifically to give beginner Ruby programmers an introduction to Sinatra.  Through this three part web series, I was able to supplement my understanding of Sinatra, and complete a fully realized web app for a simple to-do list.  And of course, no web app would be complete without the appropriate styling.</p>
-
-
-
-
-<p><p>CSS styling to be specific.<p>
-<p>To start, I added an erb page at the root of my views directory for the layout: <p></p>
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;!</span><span class="n">doctype</span> <span class="n">html</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">html</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">meta</span> <span class="n">charset</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;&lt;</span><span class="sx">%= @title + &#39; | Recall&#39; %&gt;&lt;/title&gt;</span>
-</span><span class='line'><span class="sx">  &lt;link href=</span><span class="s1">&#39;/reset.css&#39;</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;stylesheet&#39;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/style.css&#39;</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;stylesheet&#39;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="sr">/head&gt;</span>
-</span><span class='line'><span class="sr">&lt;body&gt;</span>
-</span><span class='line'><span class="sr">  &lt;header&gt;</span>
-</span><span class='line'><span class="sr">    &lt;hgroup&gt;</span>
-</span><span class='line'><span class="sr">      &lt;h1&gt;&lt;a href=&quot;/</span><span class="s2">&quot;&gt;Recall&lt;/a&gt;&lt;h1&gt;</span>
-</span><span class='line'><span class="s2">      &lt;h2&gt;&#39;cause you&#39;re too busy to remember&lt;/h2&gt;</span>
-</span><span class='line'><span class="s2">    &lt;/hgroup&gt;</span>
-</span><span class='line'><span class="s2">  &lt;/header&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s2">  &lt;div id=&quot;</span><span class="n">main</span><span class="s2">&quot;&gt;</span>
-</span><span class='line'><span class="s2">    &lt;%= yield %&gt;</span>
-</span><span class='line'><span class="s2">  &lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s2">  &lt;footer&gt;</span>
-</span><span class='line'><span class="s2">    &lt;p&gt;&lt;small&gt;An app for &lt;a href=&quot;</span><span class="ss">http</span><span class="p">:</span><span class="sr">//ne</span><span class="n">t</span><span class="o">.</span><span class="n">tutsplus</span><span class="o">.</span><span class="n">com</span><span class="s2">&quot;&gt;Nettuts+&lt;/a&gt;.&lt;/small&gt;&lt;/p&gt;</span>
-</span><span class='line'><span class="s2">  &lt;/footer&gt;</span>
-</span><span class='line'><span class="s2">&lt;/body&gt;</span>
-</span><span class='line'><span class="s2">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p><p>How does this connect to my other ruby pages you may wonder?  Yield, my friend.  Literally, yield.</p></p>
-
-<p><p>You see the div id with the tag of &ldquo;main&rdquo;?</p></p>
-
-<p><p>Right here:</p></p>
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="o">&lt;</span><span class="n">div</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;%=</span> <span class="k">yield</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">  &lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p><p>This allows the routes (view pages) to be passed in through a block, while also utilizing the id selector to streamline the content <em>stylistically</em> of each and every page my heart desires.</p></p>
-
-<p><p>Another nifty trick, I was looking for was the inclusion of css stylesheets.  Through linking to them in my layout page, I was able to universally style my web recall app.</p></p>
-
-<p><p>I was introduce to something else as well.  Let me show you: </p></p>
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="o">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/reset.css&#39;</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;stylesheet&#39;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/style.css&#39;</span> <span class="n">rel</span><span class="o">=</span><span class="s1">&#39;stylesheet&#39;</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p><p>Do you see it?  The reset&ndash;right before the css stylesheet.  That was all new to me.  So I researched&hellip;</p></p>
-
-<p><img src="https://thenypost.files.wordpress.com/2015/04/computer.jpg" alt="Researching" /></p>
-
-<p><p>&hellip;Basically every web browser uses a base stylesheet which somewhat ensures that HTML is rendered <em>reasonably</em> well when custom CSS is not provided.  Unfortunately, each browser uses a different base, and thus enters CSS resets.  A way to strip styles so your elements are rendered consistently across a multitude of browsers.</p></p>
-
-<p><p>One developer, <a href="http://www.sitepoint.com/css-resets-useful-or-useless/">Craig Buckler</a> opposes CSS resets quite simply because he resents the very idea that &ldquo;pixel perfect&rdquo; rendering is actually an achievable goal.  Instead he opts for a simple css reset of: </p></p>
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="o">*</span> <span class="p">{</span><span class="ss">padding</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span> <span class="ss">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;}</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p><p>So like any budding developer&ndash;I tested it out.  You remember the homepage of my web app I showed you at the beginning? (Just scroll up if it&rsquo;s not <font color="red">PIXEL PERFECT</font> in your mind 😎).  Drumroll please or desperate scream&ndash;after all we are about to strip my app its magic!</p></p>
-
-<p><img class="center" src="http://www.insite.io/wp-content/uploads/2015/04/animal_drums.jpg">
-<img class="center" src="/images/recall-no-reset.png"></p>
-
-<p><p>To reset or not reset?  The decision is yours.</p></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/06/21/excuse-me-my-computer-broke-again/">EXCUSE ME!!! My Computer Broke!</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -528,164 +356,32 @@
   
 
 
-<time datetime="2015-06-21T21:04:20-04:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There she goes. Again.</p>
-
-
-<p></p>
-
-<p><font color="red">#Shocking </font></p>
-
-
-<p></p>
-
-<p>It's always MY fault.  Like there's some sort of magic fairy dust sprinkled on <em>everyone else's</em> computer except *hers*. She even got an instructor to help her this time. Wow.  They are going to be in for a tasty treat--look what she put in!</p>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">evil_pokemons</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">pokemons</span><span class="o">|</span>
-</span><span class='line'><span class="no">Pretty</span> <span class="no">Please</span> <span class="n">scrape</span> <span class="n">the</span> <span class="n">pokemons</span> <span class="k">for</span> <span class="n">me!</span><span class="o">!!!!</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<p>Please. Tell me she's joking.</p>
-
-
-<p></p>
-
-<p>Oh Wait, Shhhh. This is going to be good! She was just asked if she read the Nokogiri tutorial.  SAY WHAT???? <em>She DID</em>?  She was on that website for .56 seconds.  <font color="red">#FACTS</font>. <em><strong>(PLEASE!!! JUST OPEN MY PAGES AND I WILL SPILL ALL! NO SNITCHES GET STICHES FOR ME!!!)</strong></em>.</p>
-
-
-
-
-<p>Deep breaths. Let's turn on this fan. Look, I mean, had she read it, she would've seen it's all really quite simple. You just give me a few, quick, straightforward commands at the top of your page, and I make like a shepherd and flock!</p>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;nokogiri&#39;</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<p>You can even put these commands into irb to play around with, and I will set up your ENTIRE environment perfectly (just make sure I return "true" after each command).</p>
-
-
-<p></p>
-
-<P> Next, kindly let me know what language you would like to use (I'm <em>very</em> versatile), and for heaven's sake don't be lazy, name your document something fun--'doc' is just so uneventful.</p>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">html</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;website&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span>
-</span><span class='line'><span class="n">doc_name</span> <span class="o">=</span> <span class="no">Nokogiri</span><span class="o">::</span><span class="no">HTML</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, you are at the part where you get to chillax.  Open up your browser by right clicking in crome on inspect element, and you should be able to use the nifty magnifying glass to help you locate any element's css selector you would like on the page.</p>
-
-
-
-
-<p>Once you've found the css selector of your desired element-try it out-I mean, you wouldn't buy a car without test driving it first, why should scraping be <em>any different</em>? Feel free to use binding.pry, a simple puts command, or the beautiful world of irb!</p>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">variable_doc</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-</span><span class='line'><span class="n">variable_doc</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>.search and .css mean the same thing, so don't cry your pretty little eyes out about that!  Once you've successfully matched the css selector to your element you are good to go and can head right back to your ruby program. Adding .text at the end returns--you guessed it--the text that your css selector selected!  I will take care of all the rest (like I ALWAYS do 😘).</p>
-
-
-<p><img src="https://thereadingwomb.files.wordpress.com/2011/07/jimmy-jet.gif" alt="Jimmy Jet and His TV Set" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2015-07-15T22:39:06-04:00" pubdate data-updated="true"></time>
       
-  <header>
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/blog/2015/06/07/my-first-post-on-octopress/">The Beginning</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
+      <div class="sharing">
   
-
-
-<time datetime="2015-06-07T16:37:11-04:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>  You woke up one day and realized you were ready to try something new.  Do something different.  You had taught for nine years: three countries, five schools, all ages, and (luckily!) you loved it.  You were absolutely happy.  You loved the purpose it gave you. The connections you made. The unbridled energy of Every. Single. Day.  You were never bored.  Never.</p>
-
-<p>  Until one day, it just didn’t work anymore. And you weren’t sure exactly why. You wished you had the answer, because then, maybe, you could have fixed it. It became harder and harder to keep at something, when the spark was gone.  Maybe it was all the testing.  Maybe it was the lack of services. Maybe it was the bureaucracy.  You can’t quite say&hellip;but it was time for something new.</p>
-
-<p>  You remember hearing that the average person switches their career 7 times, and here you were 31, and still doing the same thing?  Maybe it was all just an expiration date after all!  You remember learning about Steph, how she went to Flatiron, and was now working full time.  Wait.  You said.  She just went to school for three months and now has a job? Yes. WAIT.  For reals? AND she LOVES it.</p>
-
-<p>  You talked to people.  One girl had left an office job for a start up.  Her biggest regret was that her employers didn’t fire her so she could collect unemployment.  She told you to begin at codeacademy.  You did.  You felt like you were back in fifth grade when every morning began with a multiplication times tables.  Every student had 1 minute complete the questions, and if you got them all right, you got a sticker, and the next day you moved on to the next number.   You loved the certificates.  The emails congratulating you.  And you loved coding!</p>
-
-<p>  You took a class, you applied to some programs, you coded, and miraculously, you got into Flatiron!  You were so happy(cartwheels(!) and cartwheels(!))!  You had a new future.  Something exciting. Bright. And last week, you began.  You coded all week.  You learned how much you didn’t know.  You got help.  You stayed up too late, and finally, you managed to answer some of your own questions.  The error messages slowly made a little more sense.  And that’s where you are.  At the beginning.</p>
-
-<p>  I lied.</p>
-
-<p>  I said one day I woke up and wanted to try something new.  It didn’t happen like that.  It was a process.</p>
-
-<p>  There is no ready. set. go.  It’s not a gunshot and then you go off running into the distance like an antelope tearing up a glorious African sunset.  It’s a Sunday long run, slow footstep after slow footstep, building up the miles, so that one day, when that shot is fired, you will at the absolute least, know you prepared the very best you could.</p>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://beccaades.github.io/blog/2015/07/15/stalk-much/" data-via="" data-counturl="http://beccaades.github.io/blog/2015/07/15/stalk-much/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/07/05/what-i-did-over-my-summer-vacation/" title="Previous Post: Blog Post #3 or... "What I Did Over My Summer Vacation!"">&laquo; Blog Post #3 or... "What I Did Over My Summer Vacation!"</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   <section>
   <h1><a href="#">Becca Ades</a></h1>
@@ -759,6 +455,7 @@
 
   
 </aside>
+
 
     </div>
   </div>
