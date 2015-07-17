@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Stalk Much?...Cause Rails Does! - A Coder's Journey</title>
+  <title>Stalk Much?...Cause Rails Does! A Tale of One Sessions' Session - A Coder's Journey</title>
   <meta name="author" content="Becca Ades">
 
   
@@ -66,7 +66,7 @@
   
   <header>
     
-      <h1 class="entry-title">Stalk Much?...Cause Rails Does!</h1>
+      <h1 class="entry-title">Stalk Much?...Cause Rails Does! A Tale of One Sessions' Session</h1>
     
     
       <p class="meta">
@@ -91,12 +91,12 @@
 
 <div class="entry-content"><p>This may not be the most interesting of all stories, but it's one 
   that need to be told.  That begs to be heard.  And here is me, giving this story it's very 
-  own distinct voice (and thick-framed glasses!). So lets start at the beginning (alas, where most programming stories tend to start), and see if we can't make it through to the other side.  Won't you, my dear reader, come on this journey with me?</p>
+  own particular voice (and thick-framed glasses!). So lets start at the beginning (alas, where most programming stories tend to start), and see if we can't make it through to the other side.  Won't you, my dear reader, come on this jaunt with me?</p>
 
 
-<p>  <img src="http://falconcove.net/wp-content/uploads/2015/05/OnceUponATime.jpg" alt="Once upon a time" /></p>
+<p>  <img src="http://www.seventriangle.com/wp-content/uploads/2012/04/dragon.jpg" alt="Once upon a time" /></p>
 
-<p>  <p>We commence our journey in the darkest of crevices in the route.rb file in our config directory.  Here we need to establish a root directory, and hatch our grandiose session plans.  Yes, there are big things to come! </p></p>
+<p>  <p>We commence our journey in the darkest of crevices, a most important file hidden deep inside the config directory: route.rb.  Here we need to establish a root directory, and hatch our grandiose session plans.</p></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -113,7 +113,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>  <p>Now, we have a sessions directory, and we can begin building our sessions conroller.  To do this, please type the following into your terminal:</p></p>
+<p>  <p> We use the resources key word to add seven routes to our web application and quickly narrow these routes down to just the ones we need via the syntax &lsquo;:only&rsquo;.  To keep things clear, for both us and our user, we will name these routes as &lsquo;signup&rsquo;, &lsquo;logout&rsquo;, and &lsquo;login&rsquo; respectively.  We do not play with metaphors here.  Literal is best. Now, we have a sessions directory, and we can begin building our sessions conroller.  To do this, we type the following into our terminal:</p></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rails</span> <span class="n">g</span> <span class="n">controller</span> <span class="n">sessions</span>
@@ -145,7 +145,7 @@
 
 <p>   <img src="http://orig07.deviantart.net/90f0/f/2013/287/2/e/at__here_we_go__by_blistinaorgin-d6qf87y.png" alt="Luigi" /></p>
 
-<p>   <p>Quite naturally, in order for our sessions hash to function, we need to give our user the ability to login in from the home page. And in order for a user to truly, believably, and in actuality login, we need to have a method that both logs a user into our web application as well as tracks the users presence on the website.  And how can we access this method and variable from any show page on our website?  For this we need to go to that forbidden place, we have yet to explore.  The application controller.</p></p>
+<p>   <p>In order for our sessions hash to function, we need our user to be validated on the home page before visiting any other views.  Thus ensues the process of validating and logging in a user.  Yet, it is a bit more complicated than that for us programmatically.  This involves creating a method we can access from any view on our website.  For this we need to go to that forbidden place, we have yet to explore.  <strong>The application controller</strong>.</p></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -214,17 +214,29 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now that we have created our two helper methods, we will be able to access them from anywhere in our views!  But please, let's not get ahead of ourselves.Before we get to the views, we need to make a pit stop at our post controller to make sure it has access to all the necessary information.  Most notably, that we allow a user to visit </p>
+<p>These two helper methods, current_user and logged_in? will allow us to access data pertaining to our user regardless of the variables passed in through our controllers.  We will be able to access them from anywhere in our views!  And do notice the macro 'before_action :login_required,'--this makes it mandatory for a user to be logged in before accessing our But please, let's not get ahead of ourselves. Before we get to our views, we need to make a pit stop at our post controller to make sure it has access to all the necessary information.  Most notably, that we allow a user to visit our home page, or more specifically, posts#index: </p>
 
 
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">skip_before_action</span> <span class="ss">:login_required</span><span class="p">,</span> <span class="ss">:only</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:index</span><span class="o">]</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="n">skip_before_action</span> <span class="ss">:login_required</span><span class="p">,</span> <span class="ss">:only</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:index</span><span class="o">]</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p> So now, finally, we are ready to enter the holy view.  Now one might think, we should go to our post index page.  However, they would be WRONG.  Because we, programmers, are planners.  And we want our user to be able to logout no matter what page they are on.  I mean, really, sessions wants to be AVAILABLE, people.  This means that not only are we going to go in that cute little layouts directory, but also we will be rendering a partial from the application.html.erb file. Whew. That took a lot out of me.</p>
+<p>This macro does exactly what is says it does (dontcha just love ruby?), it allows only the index page of our posts controller to be visible to a user without first logging in (hence the skip_before_action --get it?!).</p>
+
+
+
+
+<p> So now, finally, we are ready to enter the holy view!!!!</P>
+
+
+<p><img src="http://www.intriguing.com/mp/_pictures/grail/large/HolyGrail051.jpg" alt="The Holy Grail" /></p>
+
+<p>Now one might think, we should go to our post index page.  However, that individual would be WRONG.  Because we, programmers, are planners.  And we want our user to be able to logout no matter what page they are on.  I mean, really, sessions wants to be AVAILABLE, people!!!  This means that not only are we going to go into that cute little layouts directory, but also we will be rendering a header  from the application.html.erb file.</p>
 
 
 
@@ -239,9 +251,10 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>Followed by the creation of "_header.html.erb"</p>
 
 
-<p>Now, we are embarking on the climax of our tale.  The partial: </p>
+<p>Now, we are embarking on the climax of our tale.  The header partial: </p>
 
 
 
@@ -266,7 +279,7 @@
 
 
 
-<p>But we still have one problem.  How does our session, know who our user is? For this, we will come full circle and revisit our sessions controller.</p>
+<p>But we still have one problem.  How does our session know who our user is? For this, we will come full circle and revisit our sessions controller.</p>
 
 
 
@@ -330,7 +343,12 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Like all good tales, there was one quiet character hiding, softly apart from the rest.  The user.id.  And like a wise old woman, who knows all, but is soft spoken, she hid away in the sessions create action.  Yet without this one line of code "session[:user_id] = user.id, our entire sessions hash would break and fall apart.  It's the link between the two controllers, between our database and our models, and also, the link between our application, and our user.</p>
+<p>Like all good tales, there was one quiet character hiding, softly apart from the rest.  The user.id.  And like a wise old woman, who knows all, but is soft spoken, she hid away in the sessions create action.  Yet without this one line of code "session[:user_id] = user.id", our entire sessions hash would break and fall apart. It's the link between the two controllers, between our database and our models, and also, the link between our application, and our user.</p>
+
+
+
+
+<p>And that my friends, is how you create sessions in rails.  Stalking complete.  Story Over.</p>
 
 
 <p><img src="http://www.rescuepost.com/.a/6a00d8357f3f2969e201b7c6e9c3ef970b-pi" alt="That's all folks" /></p>
@@ -407,7 +425,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2015/07/15/stalk-much/">Stalk Much?...Cause Rails Does!</a>
+        <a href="/blog/2015/07/15/stalk-much/">Stalk Much?...Cause Rails Does! A Tale of One Sessions' Session</a>
       </li>
     
       <li class="post">
@@ -431,7 +449,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2015/07/15/stalk-much/">Stalk Much?...Cause Rails Does!</a>
+        <a href="/blog/2015/07/15/stalk-much/">Stalk Much?...Cause Rails Does! A Tale of One Sessions' Session</a>
       </li>
     
       <li class="post">
