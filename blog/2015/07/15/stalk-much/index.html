@@ -226,7 +226,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This macro does exactly what is says it does (dontcha just love ruby?), it allows only the index page of our posts controller to be visible to a user without first logging in (hence the skip_before_action --get it?!).</p>
+<p>This macro does exactly what is says it does (dontcha just love rails?), it allows only the index page of our posts controller to be visible to a user without first logging in (hence the skip_before_action --get it?!).</p>
 
 
 
@@ -349,6 +349,24 @@
 
 
 <p>And that my friends, is how you create sessions in rails.  Stalking complete.  Story Over.</p>
+
+
+<p><img src="http://chorleywoodmagazine.co.uk/wp-content/uploads/2015/07/snouty-pride-thats-not-all-folks-snoutypig.png" alt="That's not all!" /></p>
+
+<p><strong> !!!!SPECIAL NOTE YOU <font color="red"> MUST </font> READ!!!! </strong> Please add the following to your gem file:</p>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;bcrypt&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will enable encription of passwords.  You will also need to rename the password column in your user's table schema to "password_digest".  Rails does the rest.  Can you say magic?</p>
+
+
+
+
+<p>Now, for reals!</p>
 
 
 <p><img src="http://www.rescuepost.com/.a/6a00d8357f3f2969e201b7c6e9c3ef970b-pi" alt="That's all folks" /></p>
