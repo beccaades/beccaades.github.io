@@ -4,7 +4,7 @@
   <title><![CDATA[Category: flatiron | A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/blog/categories/flatiron/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-07-17T09:15:50-04:00</updated>
+  <updated>2015-07-18T11:07:42-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -109,7 +109,7 @@
 <pre><code class="ruby">  * {padding: 0; margin: 0;}
 </code></pre>
 
-<p><p>So like any budding developer&ndash;I tested it out.  You remember the homepage of my web app I showed you at the beginning? (Just scroll up if it&rsquo;s not <font color="red">PIXEL PERFECT</font> in your mind 😎).  Drumroll please or desperate scream&ndash;after all we are about to strip my app its magic!</p></p>
+<p><p>So like any budding developer&ndash;I tested it out.  You remember the homepage of my web app I showed you at the beginning? (Just scroll up if it&rsquo;s not <font color="red">PIXEL PERFECT</font> in your mind 😎).  Drumroll please or desperate scream&ndash;after all we are about to strip my app of its magic!</p></p>
 
 <p><img class="center <a" src="href="http://www.insite.io/wp-content/uploads/2015/04/animal_drums.jpg">http://www.insite.io/wp-content/uploads/2015/04/animal_drums.jpg</a>">
 <img class="center" src="http://beccaades.github.io/images/recall-no-reset.png"></p>
