@@ -4,7 +4,7 @@
   <title><![CDATA[Category: flatiron | A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/blog/categories/flatiron/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-07-18T11:07:42-04:00</updated>
+  <updated>2015-08-13T22:45:07-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -12,6 +12,331 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[What We Talk About When We Talk About Third Party API's]]></title>
+    <link href="http://beccaades.github.io/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis/"/>
+    <updated>2015-07-29T21:35:09-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis</id>
+    <content type="html"><![CDATA[<p><img src="http://thegreatgatsby.warnerbros.com/wp-content/uploads/2013/02/GG_downloads.jpg" alt="Great Gatsby" /></p>
+
+<p><font color="blue"><em>“They were careless people, Tom and Daisy- they smashed up things and creatures and then retreated back into their money or their vast carelessness or whatever it was that kept them together, and let other people clean up the mess they had made.” &ndash;F. Scott Fitgerald</em></font></p>
+
+<p>If there was a metaphorical representation of a third party API, Leo would be it.</p>
+
+<p>Undoubtedly.</p>
+
+<p>The Great Gatsby.  Eternally eloquent, dazzling, sparkling, but somehow you can&rsquo;t help but feel that you were handed a big broken, mess, you need to JSON your way out of!</p>
+
+<p>APIs aren&rsquo;t exactly &ldquo;messy&rdquo; so to speak, in fact, they are quite the opposite, a careful, calculated way to access an <em>Application Programming Interface&rsquo;s</em> data&ndash;yet to someone interacting with an API for the first time, you can&rsquo;t help but be a bit messy, <font color="blue">&ldquo;careless&rdquo;</font> so to speak&ndash;in fact, it&rsquo;s completely necessary to understand how your API is working.</p>
+
+<p>This blog will attempt to give you the tools to wrecklessly and glamorously parse APIs.  Before you know it, you&rsquo;ll be flying over the Queensboro bridge, all of New York City in your view as you glide slowly but stylishly (cause you&rsquo;re in a hot car with a 12 cylinder engine 😎) headfirst into the city that never sleeps.</p>
+
+<p><img src="http://i.ytimg.com/vi/QoBGqtGBMLI/maxresdefault.jpg" alt="Cool Car" /></p>
+
+<p>First, it sounds obvious, but at times, we all need the obvious pointed out to us with exclamation marks!!!!!!! and &ndash;>arrows&lt;&ndash;.  LOUD AND CLEAR. Making an API call is simply accessing the correct URL for your desired data (well&hellip; you are also scraping the JSON located at a SPECIFIC website, but this is a good starting understanding.)</p>
+
+<p>Now, look up at the top of the screen. RIGHT NOW!  The url you are currently at is &ldquo;<a href="http://beccaades.github.io/what-we-talk-about-when-we-talk-about-third-party-apis">http://beccaades.github.io/what-we-talk-about-when-we-talk-about-third-party-apis</a>&rdquo;. This is where you come on the internet to read my blog about API&rsquo;s!</p>
+
+<p>Now for THE RULES:</p>
+
+<p><font color="red">1st RULE OF API&rsquo;s: READ THE DOCUMENTATION.</font></p>
+
+<p>The latest API I used, instagram, includes a developer page.  It tells you all the different endpoints you will need to access their data, and you can get to playing immediately, by placing the different queries in your browser.</p>
+
+<p>This is what they give you:</p>
+
+<pre><code class="ruby">https://api.instagram.com/v1/locations/search?lat=48.858844&amp;lng=2.294351&amp;access_token=ACCESS-TOKEN
+</code></pre>
+
+<p>This is what you do:</p>
+
+<pre><code class="ruby">https://api.instagram.com/v1/locations/search?lat=40.7577&amp;lng=-73.9857&amp;access_token=ACCESS-TOKEN
+</code></pre>
+
+<p>And <font color="red">this</font> is what you get:</p>
+
+<pre><code class="ruby">{
+meta: {
+code: 200
+},
+data: [
+{
+latitude: 40.757696,
+id: "5106788",
+longitude: -73.985716,
+name: "Swatch"
+},
+{
+latitude: 40.75770595,
+id: "877266653",
+longitude: -73.985676,
+name: "Espn - Abc Studio Times Square"
+},
+{
+latitude: 40.7576833,
+id: "5012142",
+longitude: -73.9857171,
+name: "Times Square"
+},
+{
+latitude: 40.757692657,
+id: "242689896",
+longitude: -73.985731602,
+name: "Black Bar &amp; Loungue"
+},
+</code></pre>
+
+<p>(SIDENOTE: Please don&rsquo;t be a dummy and know that you will have to actually replace the access token with your own.)</p>
+
+<p>To access this information you can treat the JSON like a hash. Let&rsquo;s say we set this equal to the variable data_hash.  If I wanted to access &ldquo;Swatch,&rdquo; I could enter data_hash[:data][0][:name]and it would return &ldquo;Swatch&rdquo; back to me.</p>
+
+<p><font color="red">2nd RULE OF API&rsquo;s: PLAY!!</font></p>
+
+<p>Now.  Listen close.  I have a little gem to share with you.  The httpary gem to be exact.</p>
+
+<p>This gem lets you get down to business quickly by simply requiring it and then gaining direct access to JSON in the API to your app, to gain both familiarity and explore potential methods for your classes.</p>
+
+<p>To use the httparty gem you simply require it in your gem file.  Then in your model, your require the gem like so:</p>
+
+<pre><code class="ruby">class InstagramWrapper
+
+  require 'httparty'
+
+  response = HTTPARTY.get("https://api.instagram.com/v1/media/search?lat=40.7577&amp;lng=73.9857&amp;distance=1000&amp;access_token=access_token")
+
+end
+</code></pre>
+
+<p>You can then begin by binding into the respond and deciding what information you need and begin to structure your methods.</p>
+
+<p><font color="red">3rd RULE of API&rsquo;s: ASK THE API&rsquo;s WHAT METHODS THEY HAVE</font></p>
+
+<p>Once you are able to access the JSON, don&rsquo;t be afraid to ask the API exactly what methods they have! They may just tickle your fancy with some extra methods that they don&rsquo;t discuss in the documentation.  For example, the only way, I was able to learn about instagram&rsquo;s nifty tag_count feature was through directly asking instagram what methods they have (rails console, baby!) and I got this quite lovely response (amongy MANY many others).</p>
+
+<pre><code class="ruby">=&gt; [:client,
+ :get_count_for_tag,
+ :get_tourist_instagrams
+</code></pre>
+
+<p>I simply did this by entering the following into my console:</p>
+
+<pre><code class="ruby">tell_me_the_methods_baby = InstagramWrapper.new
+tell_me_the_methods_baby.methods?
+</code></pre>
+
+<p>How wonderfully convenient.</p>
+
+<p><font color="red">4th RULE OF API&rsquo;s: WRAP THE API&rsquo;S METHODS IN YOUR OWN INSTANCE METHODS</font></p>
+
+<p>Once you have found the desired method, it is time to wrap it in an instance method.  For example the instagram tag count method could be wrapped as such: </p>
+
+
+<pre><code class="ruby">  def get_count_for_tag(tag)
+    results = client.tag_search(tag)
+    results.collect {|result| result["media_count"]}.first
+  end
+</code></pre>
+
+<p>  Results for the tag &ldquo;HTTparty&rdquo; gives you back :</p>
+
+<pre><code class="ruby">=&gt; 8.0
+</code></pre>
+
+<p>Sad toast.</p>
+
+<p>The people of instagram are definitely missing out.</p>
+
+<p>And there you have it.  A step by step guide to deconstruct the many faces third party API&rsquo;s may bring us.  Cheers to that!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Stalk Much?...Cause Rails Does! A Tale of One Sessions' Session]]></title>
+    <link href="http://beccaades.github.io/blog/2015/07/15/stalk-much/"/>
+    <updated>2015-07-15T22:39:06-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/07/15/stalk-much</id>
+    <content type="html"><![CDATA[<p>This may not be the most interesting of all stories, but it's one 
+  that need to be told.  That begs to be heard.  And here is me, giving this story it's very 
+  own particular voice (and thick-framed glasses!). So lets start at the beginning (alas, where most programming stories tend to start), and see if we can't make it through to the other side.  Won't you, my dear reader, come on this jaunt with me?</p>
+
+
+<p>  <img src="http://www.seventriangle.com/wp-content/uploads/2012/04/dragon.jpg" alt="Once upon a time" /></p>
+
+<p>  <p>We commence our journey in the darkest of crevices, a most important file hidden deep inside the config directory: route.rb.  Here we need to establish a root directory, and hatch our grandiose session plans.</p></p>
+
+<pre><code class="ruby">  root 'posts#index'
+
+  resources :sessions, only: [:create, :new, :destoy]
+  get '/signup', to: 'users#new'
+  get '/logout', to: 'sessions#destroy'
+  get '/login', to: 'sessions#new'
+</code></pre>
+
+<p>  <p> We use the resources key word to add seven routes to our web application and quickly narrow these routes down to just the ones we need via the syntax &lsquo;:only&rsquo;.  To keep things clear, for both us and our user, we will name these routes as &lsquo;signup&rsquo;, &lsquo;logout&rsquo;, and &lsquo;login&rsquo; respectively.  We do not play with metaphors here.  Literal is best. Now, we have a sessions directory, and we can begin building our sessions conroller.  To do this, we type the following into our terminal:</p></p>
+
+<pre><code class="ruby">rails g controller sessions
+</code></pre>
+
+<p>  <p>This will give us a controller, and while we are here&ndash;lets fill out the actions to match our routes:</p></p>
+
+<pre><code class="ruby">  def new
+  end
+
+  def create
+  end
+
+  def destroy
+  end
+</code></pre>
+
+<p>  <p>Here we go!</p></p>
+
+<p>   <img src="http://orig07.deviantart.net/90f0/f/2013/287/2/e/at__here_we_go__by_blistinaorgin-d6qf87y.png" alt="Luigi" /></p>
+
+<p>   <p>In order for our sessions hash to function, we need our user to be validated on the home page before visiting any other views.  Thus ensues the process of validating and logging in a user.  Yet, it is a bit more complicated than that for us programmatically.  This involves creating a method we can access from any view on our website.  For this we need to go to that forbidden place, we have yet to explore.  <strong>The application controller</strong>.</p></p>
+
+<pre><code class="ruby">  class ApplicationController &lt; ActionController::Base
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
+  before_action :login_required
+
+  #This method checks if we have a user signed in
+  def login_required
+    if !logged_in?
+      redirect_to login_path, :notice =&gt; "Log in to edit or delete your post"
+    end
+  end
+
+  def logged_in?
+    !!current_user
+  end
+
+  helper_method :logged_in?
+
+  #This method gives us details about our user
+  def current_user
+    if session[:user_id]
+      @current_user = User.find(session[:user_id])
+      @current_user
+    else
+      false
+    end
+  end
+
+  helper_method :current_user
+
+  end
+</code></pre>
+
+<p>These two helper methods, current_user and logged_in? will allow us to access data pertaining to our user regardless of the variables passed in through our controllers.  We will be able to access them from anywhere in our views!  And do notice the macro 'before_action :login_required,'--this makes it mandatory for a user to be logged in before accessing our But please, let's not get ahead of ourselves. Before we get to our views, we need to make a pit stop at our post controller to make sure it has access to all the necessary information.  Most notably, that we allow a user to visit our home page, or more specifically, posts#index: </p>
+
+
+<pre><code class="ruby">class PostsController &lt; ApplicationController
+  skip_before_action :login_required, :only =&gt; [:index]
+</code></pre>
+
+<p>This macro does exactly what is says it does (dontcha just love rails?), it allows only the index page of our posts controller to be visible to a user without first logging in (hence the skip_before_action --get it?!).</p>
+
+
+
+
+<p> So now, finally, we are ready to enter the holy view!!!!</P>
+
+
+<p><img src="http://www.intriguing.com/mp/_pictures/grail/large/HolyGrail051.jpg" alt="The Holy Grail" /></p>
+
+<p>Now one might think, we should go to our post index page.  However, that individual would be WRONG.  Because we, programmers, are planners.  And we want our user to be able to logout no matter what page they are on.  I mean, really, sessions wants to be AVAILABLE, people!!!  This means that not only are we going to go into that cute little layouts directory, but also we will be rendering a header  from the application.html.erb file.</p>
+
+
+
+
+<p>Rendering a partial is super easy, you simply do this within the body of your application.html.erb. </p>
+
+
+<pre><code class="ruby">&lt;%= render 'layouts/header' %&gt; 
+</code></pre>
+
+<p>Followed by the creation of "_header.html.erb"</p>
+
+
+<p>Now, we are embarking on the climax of our tale.  The header partial: </p>
+
+
+<pre><code class="ruby">    &lt;% if logged_in? %&gt;
+    Hiya, &lt;%= current_user.name %&gt;! You're looking mighty fine today! 
+    &lt;%=link_to "Log Out", logout_path %&gt;
+  &lt;% else %&gt;
+    &lt;%= link_to "Log In", login_path %&gt;
+  &lt;% end %&gt;
+</code></pre>
+
+<p>This allows the user to loggout from every page in our web application, not to mention, a sweet, homey greeting 😎.</p>
+
+
+
+
+<p>But we still have one problem.  How does our session know who our user is? For this, we will come full circle and revisit our sessions controller.</p>
+
+
+<pre><code class="ruby">class SessionsController &lt; ApplicationController
+  skip_before_action :login_required, :only =&gt; [:new, :create]
+
+  def new
+    @user = User.new
+  end
+
+  def create
+    user = User.find_by_email(params[:email])
+      if user &amp;&amp; user.authenticate(params[:password])
+        session[:user_id] = user.id
+        redirect_to root_path, :notice =&gt; "Welcome back, #{user.email}"
+      else
+        flash.now.alert = "Invalid email or password"
+        render "new"
+      end 
+  end
+
+  def destroy
+    session[:user_id] = nil 
+    redirect_to root_path 
+  end
+
+  private
+    def login(user)
+      session[:user_id] = nil
+    end
+end
+</code></pre>
+
+<p>Like all good tales, there was one quiet character hiding, softly apart from the rest.  The user.id.  And like a wise old woman, who knows all, but is soft spoken, she hid away in the sessions create action.  Yet without this one line of code "session[:user_id] = user.id", our entire sessions hash would break and fall apart. It's the link between the two controllers, between our database and our models, and also, the link between our application, and our user.</p>
+
+
+
+
+<p>And that my friends, is how you create sessions in rails.  Stalking complete.  Story Over.</p>
+
+
+<p><img src="http://chorleywoodmagazine.co.uk/wp-content/uploads/2015/07/snouty-pride-thats-not-all-folks-snoutypig.png" alt="That's not all!" /></p>
+
+<p><strong> !!!!SPECIAL NOTE YOU <font color="red"> MUST </font> READ!!!! </strong> Please add the following to your gem file:</p>
+
+
+<pre><code class="ruby">gem 'bcrypt'
+</code></pre>
+
+<p>This will enable encription of passwords.  You will also need to rename the password column in your user's table schema to "password_digest".  Rails does the rest.  Can you say <strong><font color="blue">MAGIC</font></strong>?!?!?!!</p>
+
+
+
+
+<p>Now, for reals!</p>
+
+
+<p><img src="http://www.rescuepost.com/.a/6a00d8357f3f2969e201b7c6e9c3ef970b-pi" alt="That's all folks" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Blog Post #3 or... "What I Did Over My Summer Vacation!"]]></title>

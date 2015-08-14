@@ -4,7 +4,7 @@
   <title><![CDATA[A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-07-18T11:07:42-04:00</updated>
+  <updated>2015-08-13T22:45:07-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -12,6 +12,202 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[What We Talk About When We Talk About Third Party API's]]></title>
+    <link href="http://beccaades.github.io/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis/"/>
+    <updated>2015-07-29T21:35:09-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis</id>
+    <content type="html"><![CDATA[<p><img src="http://thegreatgatsby.warnerbros.com/wp-content/uploads/2013/02/GG_downloads.jpg" alt="Great Gatsby" /></p>
+
+<p><font color="blue"><em>“They were careless people, Tom and Daisy- they smashed up things and creatures and then retreated back into their money or their vast carelessness or whatever it was that kept them together, and let other people clean up the mess they had made.” &ndash;F. Scott Fitgerald</em></font></p>
+
+<p>If there was a metaphorical representation of a third party API, Leo would be it.</p>
+
+<p>Undoubtedly.</p>
+
+<p>The Great Gatsby.  Eternally eloquent, dazzling, sparkling, but somehow you can&rsquo;t help but feel that you were handed a big broken, mess, you need to JSON your way out of!</p>
+
+<p>APIs aren&rsquo;t exactly &ldquo;messy&rdquo; so to speak, in fact, they are quite the opposite, a careful, calculated way to access an <em>Application Programming Interface&rsquo;s</em> data&ndash;yet to someone interacting with an API for the first time, you can&rsquo;t help but be a bit messy, <font color="blue">&ldquo;careless&rdquo;</font> so to speak&ndash;in fact, it&rsquo;s completely necessary to understand how your API is working.</p>
+
+<p>This blog will attempt to give you the tools to wrecklessly and glamorously parse APIs.  Before you know it, you&rsquo;ll be flying over the Queensboro bridge, all of New York City in your view as you glide slowly but stylishly (cause you&rsquo;re in a hot car with a 12 cylinder engine 😎) headfirst into the city that never sleeps.</p>
+
+<p><img src="http://i.ytimg.com/vi/QoBGqtGBMLI/maxresdefault.jpg" alt="Cool Car" /></p>
+
+<p>First, it sounds obvious, but at times, we all need the obvious pointed out to us with exclamation marks!!!!!!! and &ndash;>arrows&lt;&ndash;.  LOUD AND CLEAR. Making an API call is simply accessing the correct URL for your desired data (well&hellip; you are also scraping the JSON located at a SPECIFIC website, but this is a good starting understanding.)</p>
+
+<p>Now, look up at the top of the screen. RIGHT NOW!  The url you are currently at is &ldquo;<a href="http://beccaades.github.io/what-we-talk-about-when-we-talk-about-third-party-apis">http://beccaades.github.io/what-we-talk-about-when-we-talk-about-third-party-apis</a>&rdquo;. This is where you come on the internet to read my blog about API&rsquo;s!</p>
+
+<p>Now for THE RULES:</p>
+
+<p><font color="red">1st RULE OF API&rsquo;s: READ THE DOCUMENTATION.</font></p>
+
+<p>The latest API I used, instagram, includes a developer page.  It tells you all the different endpoints you will need to access their data, and you can get to playing immediately, by placing the different queries in your browser.</p>
+
+<p>This is what they give you:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">api</span><span class="o">.</span><span class="n">instagram</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">locations</span><span class="o">/</span><span class="n">search?lat</span><span class="o">=</span><span class="mi">48</span><span class="o">.</span><span class="mi">858844</span><span class="o">&amp;</span><span class="n">lng</span><span class="o">=</span><span class="mi">2</span><span class="o">.</span><span class="mi">294351</span><span class="o">&amp;</span><span class="n">access_token</span><span class="o">=</span><span class="no">ACCESS</span><span class="o">-</span><span class="no">TOKEN</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is what you do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">api</span><span class="o">.</span><span class="n">instagram</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">locations</span><span class="o">/</span><span class="n">search?lat</span><span class="o">=</span><span class="mi">40</span><span class="o">.</span><span class="mi">7577</span><span class="o">&amp;</span><span class="n">lng</span><span class="o">=-</span><span class="mi">73</span><span class="o">.</span><span class="mi">9857</span><span class="o">&amp;</span><span class="n">access_token</span><span class="o">=</span><span class="no">ACCESS</span><span class="o">-</span><span class="no">TOKEN</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And <font color="red">this</font> is what you get:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="ss">meta</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'><span class="ss">code</span><span class="p">:</span> <span class="mi">200</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'><span class="ss">data</span><span class="p">:</span> <span class="o">[</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="ss">latitude</span><span class="p">:</span> <span class="mi">40</span><span class="o">.</span><span class="mi">757696</span><span class="p">,</span>
+</span><span class='line'><span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;5106788&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="ss">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mi">73</span><span class="o">.</span><span class="mi">985716</span><span class="p">,</span>
+</span><span class='line'><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Swatch&quot;</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="ss">latitude</span><span class="p">:</span> <span class="mi">40</span><span class="o">.</span><span class="mi">75770595</span><span class="p">,</span>
+</span><span class='line'><span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;877266653&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="ss">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mi">73</span><span class="o">.</span><span class="mi">985676</span><span class="p">,</span>
+</span><span class='line'><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Espn - Abc Studio Times Square&quot;</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="ss">latitude</span><span class="p">:</span> <span class="mi">40</span><span class="o">.</span><span class="mi">7576833</span><span class="p">,</span>
+</span><span class='line'><span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;5012142&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="ss">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mi">73</span><span class="o">.</span><span class="mi">9857171</span><span class="p">,</span>
+</span><span class='line'><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Times Square&quot;</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="ss">latitude</span><span class="p">:</span> <span class="mi">40</span><span class="o">.</span><span class="mi">757692657</span><span class="p">,</span>
+</span><span class='line'><span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;242689896&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="ss">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mi">73</span><span class="o">.</span><span class="mi">985731602</span><span class="p">,</span>
+</span><span class='line'><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Black Bar &amp; Loungue&quot;</span>
+</span><span class='line'><span class="p">},</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(SIDENOTE: Please don&rsquo;t be a dummy and know that you will have to actually replace the access token with your own.)</p>
+
+<p>To access this information you can treat the JSON like a hash. Let&rsquo;s say we set this equal to the variable data_hash.  If I wanted to access &ldquo;Swatch,&rdquo; I could enter data_hash[:data][0][:name]and it would return &ldquo;Swatch&rdquo; back to me.</p>
+
+<p><font color="red">2nd RULE OF API&rsquo;s: PLAY!!</font></p>
+
+<p>Now.  Listen close.  I have a little gem to share with you.  The httpary gem to be exact.</p>
+
+<p>This gem lets you get down to business quickly by simply requiring it and then gaining direct access to JSON in the API to your app, to gain both familiarity and explore potential methods for your classes.</p>
+
+<p>To use the httparty gem you simply require it in your gem file.  Then in your model, your require the gem like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">InstagramWrapper</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">require</span> <span class="s1">&#39;httparty&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">response</span> <span class="o">=</span> <span class="no">HTTPARTY</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://api.instagram.com/v1/media/search?lat=40.7577&amp;lng=73.9857&amp;distance=1000&amp;access_token=access_token&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can then begin by binding into the respond and deciding what information you need and begin to structure your methods.</p>
+
+<p><font color="red">3rd RULE of API&rsquo;s: ASK THE API&rsquo;s WHAT METHODS THEY HAVE</font></p>
+
+<p>Once you are able to access the JSON, don&rsquo;t be afraid to ask the API exactly what methods they have! They may just tickle your fancy with some extra methods that they don&rsquo;t discuss in the documentation.  For example, the only way, I was able to learn about instagram&rsquo;s nifty tag_count feature was through directly asking instagram what methods they have (rails console, baby!) and I got this quite lovely response (amongy MANY many others).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:client</span><span class="p">,</span>
+</span><span class='line'> <span class="ss">:get_count_for_tag</span><span class="p">,</span>
+</span><span class='line'> <span class="ss">:get_tourist_instagrams</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I simply did this by entering the following into my console:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">tell_me_the_methods_baby</span> <span class="o">=</span> <span class="no">InstagramWrapper</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">tell_me_the_methods_baby</span><span class="o">.</span><span class="n">methods?</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>How wonderfully convenient.</p>
+
+<p><font color="red">4th RULE OF API&rsquo;s: WRAP THE API&rsquo;S METHODS IN YOUR OWN INSTANCE METHODS</font></p>
+
+<p>Once you have found the desired method, it is time to wrap it in an instance method.  For example the instagram tag count method could be wrapped as such: </p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">get_count_for_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tag_search</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">results</span><span class="o">.</span><span class="n">collect</span> <span class="p">{</span><span class="o">|</span><span class="n">result</span><span class="o">|</span> <span class="n">result</span><span class="o">[</span><span class="s2">&quot;media_count&quot;</span><span class="o">]</span><span class="p">}</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  Results for the tag &ldquo;HTTparty&rdquo; gives you back :</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=&gt;</span> <span class="mi">8</span><span class="o">.</span><span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sad toast.</p>
+
+<p>The people of instagram are definitely missing out.</p>
+
+<p>And there you have it.  A step by step guide to deconstruct the many faces third party API&rsquo;s may bring us.  Cheers to that!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stalk Much?...Cause Rails Does! A Tale of One Sessions' Session]]></title>
