@@ -9,7 +9,7 @@
   <meta name="author" content="Becca Ades">
 
   
-  <meta name="description" content="I ended my last post stating you should wrap your desired API&rsquo;s methods in you own instance methods. While this is true, I left out the whole &hellip;">
+  <meta name="description" content="I ended my last post stating you should wrap your desired API&rsquo;s methods in your own instance methods. While this is true, I left out the whole &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,7 +69,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">extend::What We Talk About When We Talk About Third Party API's</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">Object = 'What We Talk About When We Talk About Third Party API's'.new</a></h1>
     
     
       <p class="meta">
@@ -92,17 +92,15 @@
   </header>
 
 
-  <div class="entry-content"><p>I ended my last post stating you should wrap your desired API&rsquo;s methods in you own instance methods. While this is true, I left out the whole why of it all.</p>
+  <div class="entry-content"><p>I ended my last post stating you should wrap your desired API&rsquo;s methods in your own instance methods. While this is true, I left out the whole <strong><em>why</em></strong> of it all. How dare I!</p>
 
 <p>Allow me, to give you a hint&hellip;</p>
 
 <p><img class="center" src="http://vision.stanford.edu/lijiali/JiaLi_files/ObjectBank.jpg"></p>
 
-<p>You see, everything, and I do mean EVERYTHING(!) in ruby, is an object, which includes, our dear complicated API&rsquo;s.</p>
+<p>You see, everything, and I do mean <font color="red"> EVERYTHING(!) </font> in Ruby is an object, including our dear complicated API&rsquo;s.</p>
 
-<p>Without further adieu, let&rsquo;s begin!</p>
-
-<p>As always, we want our naming to be clear, so let&rsquo;s just call our new class InstagramWrapper, like so:</p>
+<p>Without further ado, I&rsquo;d like to introduce you to my API object:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -111,17 +109,27 @@
 <span class='line-number'>5</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="nb">open</span><span class="o">-</span><span class="n">uri</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">Instagram</span><span class="o">-</span><span class="no">Wrapper</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">InstagramWrapper</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>You may have noticed that I required open-uri.  Using this is an easy-to-use wrapper for net/http, net/https, and net/ftp, and is included in the ruby standard library, meaning, if you are in a rails app, you do not need to require open-uri.  It comes for free.</p>
+<p>You may have noticed that I required open-uri.  Using this is an easy-to-use wrapper for net/http, net/https, and net/ftp, and is included in the ruby standard library, meaning, if you are in a rails app, you do not need to require open-uri.</p>
 
-<p>Now, because we are dealing with the instagram API call itself, as an object, we need to initialize it, which means, we need to ask ourselves, what does the API call need to function.  This may depend on what kind of API call you are making.  If you want to make a call on behalf of a user, chances are, you will need to use OAuth, to get permission to user the user&rsquo;s specific id.  If you just want to get the result for a certian tag search or really, anything unrelated to a specific user, you will more than likely, not need the user to authorize, your application.  For the purposes of this tutorial, let&rsquo;s say you you just want to get all the instagrams for a specific tag search.</p>
+<p>Now, because we are dealing with the instagram API call, itself&ndash;as an object&ndash;we need to initialize it and that means, we need to ask ourselves some seriously <em> existential </em> questions.</p>
 
-<p>To start, all you really need to initialize is the client_id (a key you get by registering your application with instagram), as well as add the gem &lsquo;instagram&rsquo; to your gemfile.</p>
+<p><img src="http://static.architexturez.net/cdn/farfuture/kt9R9ega7jrYrCCjtFOQxFyVKbDHSiqBfTR6-HPoS-8/mtime:1438953286/data/styles/az_cf_core_l-region-content/public/media//margritti-not-pipe.jpg" alt="This is not a pipe" /></p>
+
+<p><strong> What makes an API call an API call? </strong></p>
+
+<p>&hellip;or, in less abstract terms,<em> what exactly does an API call need to be an API call?</em></p>
+
+<p>This depends on what kind of API call you are making.</p>
+
+<p>If you want to make a call on behalf of a user, chances are, you will need to use OAuth, to get permission to user the user&rsquo;s specific id.  If you just want to get the result for a certian tag search or really, anything unrelated to a specific user, you will more than likely, not need the user to authorize, your application.  For the purposes of this tutorial, let&rsquo;s say you just want to get all the instagrams for a specific tag search.</p>
+
+<p>To bring our API call to life we need to initialize the client_id (a key you get by registering your application with instagram).</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -145,36 +153,32 @@
 <p>Now you can go into your rails console and type:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span> <span class="o">=</span> <span class="no">InstagramWrapper</span><span class="o">.</span><span class="n">new</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing_with_my_new_api_class</span> <span class="o">=</span> <span class="no">InstagramWrapper</span><span class="o">.</span><span class="n">new</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Which will return the InstagramWrapper object, the API call itself.</p>
-
-<p>Now ask what methods are available to you:</p>
+<p>Which will return the InstagramWrapper object, the API call itself. Don&rsquo;t be shy. Ask what methods are available to you:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span><span class="o">.</span><span class="n">methods</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>And the first one is client.  Keep asking questions.  They keep you young.</p>
+<p>And the first one is client.  Keep asking questions (They keep you young at heart<font color="red"> ❤️ </font>).</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">methods</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>And there it is.  tag_search.  Let&rsquo;s do it.</p>
+<p>And there it is!!!!<em><strong> tag_search</strong></em>(<font color="red">!!!!</font>).  Just do it.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">tag_search</span><span class="p">(</span><span class="s2">&quot;everythingsanobject&quot;</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>And the results are in.  One smart cookie has tagged this.  I wonder who it could be?</p>
-
-<p>And now the fun part!  Lets add this method to our Instagram API object!</p>
+<p>One smart cookie has tagged this.  Neat-o.  Lets add this method to our Instagram API object.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -201,7 +205,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>And there you have it.  Your very own, fully functional API object nicely wrapped in a InstagramWrapper class.</p>
+<p>And there you have it.  Your very own, fully functional API object tightly wrapped in a InstagramWrapper class.</p>
 
 <p> <img src="http://images.clipartpanda.com/birthday-20clipart-colorful_kids_birthday_present.png" alt="Present" /></p>
 
@@ -1119,7 +1123,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">extend::What We Talk About When We Talk About Third Party API's</a>
+        <a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">Object = 'What We Talk About When We Talk About Third Party API's'.new</a>
       </li>
     
       <li class="post">
@@ -1147,7 +1151,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">extend::What We Talk About When We Talk About Third Party API's</a>
+        <a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">Object = 'What We Talk About When We Talk About Third Party API's'.new</a>
       </li>
     
       <li class="post">
