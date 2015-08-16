@@ -4,7 +4,7 @@
   <title><![CDATA[A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-08-13T22:52:27-04:00</updated>
+  <updated>2015-08-16T17:19:34-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -12,6 +12,128 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[extend::What We Talk About When We Talk About Third Party API's]]></title>
+    <link href="http://beccaades.github.io/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/"/>
+    <updated>2015-08-16T14:53:29-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis</id>
+    <content type="html"><![CDATA[<p>I ended my last post stating you should wrap your desired API&rsquo;s methods in you own instance methods. While this is true, I left out the whole why of it all.</p>
+
+<p>Allow me, to give you a hint&hellip;</p>
+
+<p><img class="center" src="http://vision.stanford.edu/lijiali/JiaLi_files/ObjectBank.jpg"></p>
+
+<p>You see, everything, and I do mean EVERYTHING(!) in ruby, is an object, which includes, our dear complicated API&rsquo;s.</p>
+
+<p>Without further adieu, let&rsquo;s begin!</p>
+
+<p>As always, we want our naming to be clear, so let&rsquo;s just call our new class InstagramWrapper, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="nb">open</span><span class="o">-</span><span class="n">uri</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Instagram</span><span class="o">-</span><span class="no">Wrapper</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may have noticed that I required open-uri.  Using this is an easy-to-use wrapper for net/http, net/https, and net/ftp, and is included in the ruby standard library, meaning, if you are in a rails app, you do not need to require open-uri.  It comes for free.</p>
+
+<p>Now, because we are dealing with the instagram API call itself, as an object, we need to initialize it, which means, we need to ask ourselves, what does the API call need to function.  This may depend on what kind of API call you are making.  If you want to make a call on behalf of a user, chances are, you will need to use OAuth, to get permission to user the user&rsquo;s specific id.  If you just want to get the result for a certian tag search or really, anything unrelated to a specific user, you will more than likely, not need the user to authorize, your application.  For the purposes of this tutorial, let&rsquo;s say you you just want to get all the instagrams for a specific tag search.</p>
+
+<p>To start, all you really need to initialize is the client_id (a key you get by registering your application with instagram), as well as add the gem &lsquo;instagram&rsquo; to your gemfile.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">InstagramWrapper</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:client</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>    <span class="vi">@client</span> <span class="o">=</span> <span class="no">Instagram</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;INSTAGRAM_CLIENT_ID&quot;</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can go into your rails console and type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span> <span class="o">=</span> <span class="no">InstagramWrapper</span><span class="o">.</span><span class="n">new</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which will return the InstagramWrapper object, the API call itself.</p>
+
+<p>Now ask what methods are available to you:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span><span class="o">.</span><span class="n">methods</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the first one is client.  Keep asking questions.  They keep you young.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">methods</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And there it is.  tag_search.  Let&rsquo;s do it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">tag_search</span><span class="p">(</span><span class="s2">&quot;everythingsanobject&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the results are in.  One smart cookie has tagged this.  I wonder who it could be?</p>
+
+<p>And now the fun part!  Lets add this method to our Instagram API object!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">InstagramWrapper</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:client</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>    <span class="vi">@client</span> <span class="o">=</span> <span class="no">Instagram</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;INSTAGRAM_CLIENT_ID&quot;</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">number_of_tags</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">client</span><span class="o">.</span><span class="n">tag_search</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And there you have it.  Your very own, fully functional API object nicely wrapped in a InstagramWrapper class.</p>
+
+<p> <img src="http://images.clipartpanda.com/birthday-20clipart-colorful_kids_birthday_present.png" alt="Present" /></p>
+
+<p>You&rsquo;re welcome.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[What We Talk About When We Talk About Third Party API's]]></title>
@@ -635,7 +757,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[EXCUSE ME!!! My Computer Broke!]]></title>
+    <title type="html"><![CDATA["EXCUSE ME!!! My Computer Broke!"]]></title>
     <link href="http://beccaades.github.io/blog/2015/06/21/excuse-me-my-computer-broke-again/"/>
     <updated>2015-06-21T21:04:20-04:00</updated>
     <id>http://beccaades.github.io/blog/2015/06/21/excuse-me-my-computer-broke-again</id>

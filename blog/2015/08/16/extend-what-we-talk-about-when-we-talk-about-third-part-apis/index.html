@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>extend::What We Talk About When We Talk About Third Party API's - A Coder's Journey</title>
+  <meta name="author" content="Becca Ades">
+
+  
+  <meta name="description" content="I ended my last post stating you should wrap your desired API&rsquo;s methods in you own instance methods. While this is true, I left out the whole &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://beccaades.github.io/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="A Coder's Journey" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">A Coder's Journey</a></h1>
+  
+  <div class="subtitle">
+    <h2>From educator to programmer.</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">blog</a></li></div><div class="spacer"></div>
+     <div> 
+  <li><a href="/projects">projects</a></li></div><div class="spacer"></div>
+       <div> 
+  <li><a href="/work">work</a></li></div><div class="spacer"></div>
+         <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+  
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">extend::What We Talk About When We Talk About Third Party API's</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-16T14:53:29-04:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I ended my last post stating you should wrap your desired API&rsquo;s methods in you own instance methods. While this is true, I left out the whole why of it all.</p>
+
+<p>Allow me, to give you a hint&hellip;</p>
+
+<p><img class="center" src="http://vision.stanford.edu/lijiali/JiaLi_files/ObjectBank.jpg"></p>
+
+<p>You see, everything, and I do mean EVERYTHING(!) in ruby, is an object, which includes, our dear complicated API&rsquo;s.</p>
+
+<p>Without further adieu, let&rsquo;s begin!</p>
+
+<p>As always, we want our naming to be clear, so let&rsquo;s just call our new class InstagramWrapper, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="nb">open</span><span class="o">-</span><span class="n">uri</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Instagram</span><span class="o">-</span><span class="no">Wrapper</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may have noticed that I required open-uri.  Using this is an easy-to-use wrapper for net/http, net/https, and net/ftp, and is included in the ruby standard library, meaning, if you are in a rails app, you do not need to require open-uri.  It comes for free.</p>
+
+<p>Now, because we are dealing with the instagram API call itself, as an object, we need to initialize it, which means, we need to ask ourselves, what does the API call need to function.  This may depend on what kind of API call you are making.  If you want to make a call on behalf of a user, chances are, you will need to use OAuth, to get permission to user the user&rsquo;s specific id.  If you just want to get the result for a certian tag search or really, anything unrelated to a specific user, you will more than likely, not need the user to authorize, your application.  For the purposes of this tutorial, let&rsquo;s say you you just want to get all the instagrams for a specific tag search.</p>
+
+<p>To start, all you really need to initialize is the client_id (a key you get by registering your application with instagram), as well as add the gem &lsquo;instagram&rsquo; to your gemfile.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">InstagramWrapper</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:client</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>    <span class="vi">@client</span> <span class="o">=</span> <span class="no">Instagram</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;INSTAGRAM_CLIENT_ID&quot;</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can go into your rails console and type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span> <span class="o">=</span> <span class="no">InstagramWrapper</span><span class="o">.</span><span class="n">new</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which will return the InstagramWrapper object, the API call itself.</p>
+
+<p>Now ask what methods are available to you:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span><span class="o">.</span><span class="n">methods</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the first one is client.  Keep asking questions.  They keep you young.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">methods</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And there it is.  tag_search.  Let&rsquo;s do it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">playing</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">tag_search</span><span class="p">(</span><span class="s2">&quot;everythingsanobject&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the results are in.  One smart cookie has tagged this.  I wonder who it could be?</p>
+
+<p>And now the fun part!  Lets add this method to our Instagram API object!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">InstagramWrapper</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:client</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>    <span class="vi">@client</span> <span class="o">=</span> <span class="no">Instagram</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;INSTAGRAM_CLIENT_ID&quot;</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">number_of_tags</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">client</span><span class="o">.</span><span class="n">tag_search</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And there you have it.  Your very own, fully functional API object nicely wrapped in a InstagramWrapper class.</p>
+
+<p> <img src="http://images.clipartpanda.com/birthday-20clipart-colorful_kids_birthday_present.png" alt="Present" /></p>
+
+<p>You&rsquo;re welcome.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Becca Ades</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-16T14:53:29-04:00" pubdate data-updated="true"></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://beccaades.github.io/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/" data-via="" data-counturl="http://beccaades.github.io/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis/" title="Previous Post: What We Talk About When We Talk About Third Party API's">&laquo; What We Talk About When We Talk About Third Party API's</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  <section>
+  <h1><a href="#">Becca Ades</a></h1>
+  <p>The website of me, <a href="https://google.com/+MartinMadsen1">Becca Ades</a>.</p>
+  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/fapper">here</a>.</p>
+  <div class="social-icons">
+    
+
+    
+
+    
+
+    
+
+    
+
+    <a href="/atom.xml"><img src="/images/social/rss.png" alt="RSS" /></a>
+  </div>
+</section>
+
+  <section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">extend::What We Talk About When We Talk About Third Party API's</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis/">What We Talk About When We Talk About Third Party API's</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/15/stalk-much/">Stalk Much?...Cause Rails Does! A Tale of One Sessions' Session</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/05/what-i-did-over-my-summer-vacation/">Blog Post #3 or... "What I Did Over My Summer Vacation!"</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/06/21/excuse-me-my-computer-broke-again/">"EXCUSE ME!!! My Computer Broke!"</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+    <section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">extend::What We Talk About When We Talk About Third Party API's</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis/">What We Talk About When We Talk About Third Party API's</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/15/stalk-much/">Stalk Much?...Cause Rails Does! A Tale of One Sessions' Session</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/05/what-i-did-over-my-summer-vacation/">Blog Post #3 or... "What I Did Over My Summer Vacation!"</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/06/21/excuse-me-my-computer-broke-again/">"EXCUSE ME!!! My Computer Broke!"</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><footer class="main-footer">
+	<section class="interior-footer">
+		<span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+	</section>
+</footer>
+
+<p>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+</body>
+</html>
