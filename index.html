@@ -9,7 +9,7 @@
   <meta name="author" content="Becca Ades">
 
   
-  <meta name="description" content="I ended my last post stating you should wrap your desired API&rsquo;s methods in your own instance methods. While this is true, I left out the whole &hellip;">
+  <meta name="description" content="Linked lists are not an all purpose tool. In fact, the first time you play with a linked list will probably be to help develop your conceptual &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +63,250 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/22/everything-is-a-balance-between-space-and-time-the-poetic-nature-of-linked-lists/">Everything Is a Delicate Balance Between Space and Time: The Poetic Nature of Linked Lists</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-22T13:15:31-04:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Linked lists are not an all purpose tool.  In fact, the first time you play with a linked list will probably be to help develop your conceptual understanding of computer science theories.  But you already, undoubtedly know a little bit about their functionality through other ruby data structures.</p>
+
+<p>A linked list is a data structure used to sort and organize data. A linked list is similar to an array: it stores data at a particular value. However, it differs as each element in a linked list (called a node), has knowledge of the node that comes after it.  You can think of a node object like this:</p>
+
+<p><img class="center" src="http://www.knowledgeidea.com/wp-content/uploads/2015/01/Linked-List-in-C-.jpg"></p>
+
+<p>A node object contains the node itself as well as a pointer to the object that follows it (The link in linked list!).  It therefore takes up more memory than an array.  Here is what the node object looks like in ruby:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Node</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:data</span><span class="p">,</span> <span class="ss">:pointer</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pointer</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@data</span> <span class="o">=</span> <span class="n">data</span>
+</span><span class='line'>    <span class="vi">@pointer</span> <span class="o">=</span> <span class="n">pointer</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the node is initialized, it has data as well as a pointer to the next node (this can be set to nil, if the proceeding node does not exist or is itself a nil value).</p>
+
+<p>Now lets get in the console and play!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">node_1</span> <span class="o">=</span> <span class="no">Node</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Hiya Buddy!&quot;</span><span class="p">)</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="c1">#&lt;Node:0x007fd1931b6f18 @data=&quot;Hiya Buddy!&quot;, @pointer=nil&gt;  </span>
+</span><span class='line'>
+</span><span class='line'><span class="n">node_2</span> <span class="o">=</span> <span class="no">Node</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Right Back Atcha!&quot;</span><span class="p">)</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="c1">#&lt;Node:0x007fd193184ea0 @data=&quot;Right Back Atcha!&quot;, @pointer=nil&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We have two nodes, but both node_1&rsquo;s pointer and node_2&rsquo;s pointer&rsquo;s are nil. In order for them to be connected to create the beginning of a linked list we need to set node_1&rsquo;s pointer to node_2 as such:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="n">node_1</span><span class="o">.</span><span class="n">pointer</span> <span class="o">=</span> <span class="n">node_2</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">node_1</span>
+</span><span class='line'>  <span class="o">=&gt;</span> <span class="c1">#&lt;Node:0x007fd1931b6f18 @data=&quot;Hiya Buddy!&quot;, @pointer=#&lt;Node:0x007fd193184ea0 @data=&quot;Right back atcha!&quot;, @pointer=nil&gt;&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we can see that the object node_1 has knowledge of the node_2 object.  This is the beginning of a linked list.  You will commonly see the next method, used in place of a pointer.  However, because next is a key word in ruby, we can&rsquo;t initialize it in the node object&ndash;yet keep calm, we can alias the method as so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Node</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:data</span><span class="p">,</span> <span class="ss">:pointer</span>
+</span><span class='line'>  <span class="n">alias_method</span> <span class="ss">:next</span><span class="p">,</span> <span class="ss">:pointer</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pointer</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@data</span> <span class="o">=</span> <span class="n">data</span>
+</span><span class='line'>    <span class="vi">@pointer</span> <span class="o">=</span> <span class="n">pointer</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will allow us to call the next method through the node object itself. Therefore if I want to call the node_2 object.  I can do it as such:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">node_1</span><span class="o">.</span><span class="n">next</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="c1">#&lt;Node:0x007fd192b4efb8 @data=&quot;Right Back atcha!&quot;, @pointer=nil&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In a singly linked list there is a head, which represents the beginning of a linked list.  To create this relationship, we will need a new object, our Linked List object, composed of our node objects.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">LinkedList</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:head</span><span class="p">,</span> <span class="ss">:data</span><span class="p">,</span> <span class="ss">:pointer</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@head</span> <span class="o">=</span> <span class="no">Node</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pointer</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we have our very own linked list, we can begin to add methods to&ndash;for example, we can create a method to store data at the beginning of our linked list:</p>
+
+<p>lets say we have the following linked list that looked like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">c</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To insert the string &ldquo;the abc&rsquo;s&rdquo; into the 0 index, we would need to first create a new node object with the data &ldquo;the abc&rsquo;s&rdquo; and set our new node object&rsquo;s pointer to a, the current head of our linked list.</p>
+
+<p>This would give us:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;the abc&#39;s&quot;</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">c</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That said, the method should look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">unshift</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">new_node</span> <span class="o">=</span> <span class="no">Node</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1">#first we create a new node</span>
+</span><span class='line'>    <span class="n">new_node</span><span class="o">.</span><span class="n">pointer</span> <span class="o">=</span> <span class="vi">@head</span> <span class="c1">#we set the pointer to the head (a) of our linked list</span>
+</span><span class='line'>    <span class="vi">@head</span> <span class="o">=</span> <span class="n">new_node</span> <span class="c1">#our new node become the new head, still pointing to (a) </span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This adds a node object at the beginning of our linked list by first creating a new node object, and then setting it&rsquo;s pointer to the current head object (the first object in the list).</p>
+
+<p>Now, what if we wanted to insert a value in the center of our linked list?</p>
+
+<p>Say we want our linked list to look as such:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;the abc&#39;s&quot;</span> <span class="o">--&gt;</span> <span class="n">a</span> <span class="o">--&gt;</span> <span class="n">b</span> <span class="o">--&gt;</span> <span class="s2">&quot;psych!&quot;</span> <span class="o">--&gt;</span> <span class="n">c</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To insert &ldquo;psych&rdquo; into the third index, we would have to move to the second index to get b, create a new node, &ldquo;psych!&rdquo;, set b&rsquo;s pointer to &ldquo;psych&rdquo; and then set the pointer of our new node to c.</p>
+
+<p>Our new code would look like this!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">insert_at_index</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">current</span> <span class="o">=</span> <span class="n">head</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">(</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">pointer</span> <span class="o">==</span> <span class="kp">nil</span>
+</span><span class='line'>        <span class="n">next_node</span> <span class="o">=</span> <span class="no">Node</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="kp">nil</span><span class="p">,</span> <span class="kp">nil</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">next_node</span><span class="o">.</span><span class="n">pointer</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">pointer</span>
+</span><span class='line'>        <span class="n">current</span><span class="o">.</span><span class="n">pointer</span> <span class="o">=</span> <span class="n">next_node</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">next</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="n">new_node</span> <span class="o">=</span> <span class="no">Node</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c1">#new node &quot;psych!&quot;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">pointer</span> <span class="o">!=</span> <span class="kp">nil</span>
+</span><span class='line'>    <span class="n">new_node</span><span class="o">.</span><span class="n">pointer</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">pointer</span> <span class="c1">#&quot;psych!&quot;&#39;s next node is b&#39;s next, c</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>    <span class="n">current</span><span class="o">.</span><span class="n">pointer</span> <span class="o">=</span> <span class="n">new_node</span> <span class="c1">#b&#39;s next is &quot;psych&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Please note, that this method will not work if you want to insert a new note at the beginning of the linked list, for this your user should be directed to the unshift method.</p>
+
+<p>Now, onto the bigger questions:  Why would we want to use a linked list instead of an Array?</p>
+
+<p>Well, lets compare using a chart:</p>
+
+<p><img src="http://javaconceptoftheday.com/wp-content/uploads/2014/12/ArrayListVsLinkedList.png" alt="array vs. linked list" /></p>
+
+<p>And there you have it.  The hows and whys of linked lists.  Good luck on your next and all future interviews!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1101,8 +1345,7 @@
 <aside class="sidebar">
   <section>
   <h1><a href="#">Becca Ades</a></h1>
-  <p>The website of me, <a href="https://google.com/+MartinMadsen1">Becca Ades</a>.</p>
-  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/fapper">here</a>.</p>
+  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/beccaades">here</a>.</p>
   <div class="social-icons">
     
 
@@ -1123,6 +1366,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/08/22/everything-is-a-balance-between-space-and-time-the-poetic-nature-of-linked-lists/">Everything Is a Delicate Balance Between Space and Time: The Poetic Nature of Linked Lists</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">Object = 'What We Talk About When We Talk About Third Party API's'.new</a>
       </li>
     
@@ -1136,10 +1383,6 @@
     
       <li class="post">
         <a href="/blog/2015/07/05/what-i-did-over-my-summer-vacation/">Blog Post #3 or... "What I Did Over My Summer Vacation!"</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/06/21/excuse-me-my-computer-broke-again/">"EXCUSE ME!!! My Computer Broke!"</a>
       </li>
     
   </ul>
@@ -1151,6 +1394,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/08/22/everything-is-a-balance-between-space-and-time-the-poetic-nature-of-linked-lists/">Everything Is a Delicate Balance Between Space and Time: The Poetic Nature of Linked Lists</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/">Object = 'What We Talk About When We Talk About Third Party API's'.new</a>
       </li>
     
@@ -1164,10 +1411,6 @@
     
       <li class="post">
         <a href="/blog/2015/07/05/what-i-did-over-my-summer-vacation/">Blog Post #3 or... "What I Did Over My Summer Vacation!"</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/06/21/excuse-me-my-computer-broke-again/">"EXCUSE ME!!! My Computer Broke!"</a>
       </li>
     
   </ul>

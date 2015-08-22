@@ -4,7 +4,7 @@
   <title><![CDATA[Category: flatiron | A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/blog/categories/flatiron/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-08-16T18:07:51-04:00</updated>
+  <updated>2015-08-22T15:02:52-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -12,6 +12,148 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Everything is a Delicate Balance Between Space and Time: The Poetic Nature of Linked Lists]]></title>
+    <link href="http://beccaades.github.io/blog/2015/08/22/everything-is-a-balance-between-space-and-time-the-poetic-nature-of-linked-lists/"/>
+    <updated>2015-08-22T13:15:31-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/08/22/everything-is-a-balance-between-space-and-time-the-poetic-nature-of-linked-lists</id>
+    <content type="html"><![CDATA[<p>Linked lists are not an all purpose tool.  In fact, the first time you play with a linked list will probably be to help develop your conceptual understanding of computer science theories.  But you already, undoubtedly know a little bit about their functionality through other ruby data structures.</p>
+
+<p>A linked list is a data structure used to sort and organize data. A linked list is similar to an array: it stores data at a particular value. However, it differs as each element in a linked list (called a node), has knowledge of the node that comes after it.  You can think of a node object like this:</p>
+
+<p><img class="center <a" src="href="http://www.knowledgeidea.com/wp-content/uploads/2015/01/Linked-List-in-C-.jpg">http://www.knowledgeidea.com/wp-content/uploads/2015/01/Linked-List-in-C-.jpg</a>"></p>
+
+<p>A node object contains the node itself as well as a pointer to the object that follows it (The link in linked list!).  It therefore takes up more memory than an array.  Here is what the node object looks like in ruby:</p>
+
+<pre><code class="ruby">class Node
+  attr_accessor :data, :pointer  
+
+  def initialize(data, pointer = nil)
+    @data = data
+    @pointer = pointer
+  end
+
+end
+</code></pre>
+
+<p>When the node is initialized, it has data as well as a pointer to the next node (this can be set to nil, if the proceeding node does not exist or is itself a nil value).</p>
+
+<p>Now lets get in the console and play!</p>
+
+<pre><code class="ruby">node_1 = Node.new("Hiya Buddy!")
+ =&gt; #&lt;Node:0x007fd1931b6f18 @data="Hiya Buddy!", @pointer=nil&gt;  
+
+node_2 = Node.new("Right Back Atcha!")
+ =&gt; #&lt;Node:0x007fd193184ea0 @data="Right Back Atcha!", @pointer=nil&gt; 
+</code></pre>
+
+<p>We have two nodes, but both node_1&rsquo;s pointer and node_2&rsquo;s pointer&rsquo;s are nil. In order for them to be connected to create the beginning of a linked list we need to set node_1&rsquo;s pointer to node_2 as such:</p>
+
+<pre><code class="ruby"> node_1.pointer = node_2
+
+ node_1
+  =&gt; #&lt;Node:0x007fd1931b6f18 @data="Hiya Buddy!", @pointer=#&lt;Node:0x007fd193184ea0 @data="Right back atcha!", @pointer=nil&gt;&gt; 
+</code></pre>
+
+<p>Now we can see that the object node_1 has knowledge of the node_2 object.  This is the beginning of a linked list.  You will commonly see the next method, used in place of a pointer.  However, because next is a key word in ruby, we can&rsquo;t initialize it in the node object&ndash;yet keep calm, we can alias the method as so:</p>
+
+<pre><code class="ruby">class Node
+  attr_accessor :data, :pointer
+  alias_method :next, :pointer  
+
+  def initialize(data, pointer = nil)
+    @data = data
+    @pointer = pointer
+  end
+
+end
+</code></pre>
+
+<p>This will allow us to call the next method through the node object itself. Therefore if I want to call the node_2 object.  I can do it as such:</p>
+
+<pre><code class="ruby">node_1.next 
+ =&gt; #&lt;Node:0x007fd192b4efb8 @data="Right Back atcha!", @pointer=nil&gt; 
+</code></pre>
+
+<p>In a singly linked list there is a head, which represents the beginning of a linked list.  To create this relationship, we will need a new object, our Linked List object, composed of our node objects.</p>
+
+<pre><code class="ruby">class LinkedList
+  attr_accessor :head, :data, :pointer
+
+  def initialize(data)
+    @head = Node.new(data, pointer)
+  end
+end
+</code></pre>
+
+<p>Here we have our very own linked list, we can begin to add methods to&ndash;for example, we can create a method to store data at the beginning of our linked list:</p>
+
+<p>lets say we have the following linked list that looked like this:</p>
+
+<pre><code class="ruby">a -&gt; b -&gt; c 
+</code></pre>
+
+<p>To insert the string &ldquo;the abc&rsquo;s&rdquo; into the 0 index, we would need to first create a new node object with the data &ldquo;the abc&rsquo;s&rdquo; and set our new node object&rsquo;s pointer to a, the current head of our linked list.</p>
+
+<p>This would give us:</p>
+
+<pre><code class="ruby">"the abc's" -&gt; a -&gt; b -&gt; c
+</code></pre>
+
+<p>That said, the method should look like this:</p>
+
+<pre><code class="ruby">  def unshift(data)
+    new_node = Node.new(data) #first we create a new node
+    new_node.pointer = @head #we set the pointer to the head (a) of our linked list
+    @head = new_node #our new node become the new head, still pointing to (a) 
+  end
+</code></pre>
+
+<p>This adds a node object at the beginning of our linked list by first creating a new node object, and then setting it&rsquo;s pointer to the current head object (the first object in the list).</p>
+
+<p>Now, what if we wanted to insert a value in the center of our linked list?</p>
+
+<p>Say we want our linked list to look as such:</p>
+
+<pre><code class="ruby">"the abc's" --&gt; a --&gt; b --&gt; "psych!" --&gt; c
+</code></pre>
+
+<p>To insert &ldquo;psych&rdquo; into the third index, we would have to move to the second index to get b, create a new node, &ldquo;psych!&rdquo;, set b&rsquo;s pointer to &ldquo;psych&rdquo; and then set the pointer of our new node to c.</p>
+
+<p>Our new code would look like this!</p>
+
+<pre><code class="ruby">def insert_at_index(index, value)
+  current = head
+
+    (index - 1).times do
+      if current.pointer == nil
+        next_node = Node.new(nil, nil)
+        next_node.pointer = current.pointer
+        current.pointer = next_node
+      end
+      current = current.next
+    end
+  end
+  new_node = Node.new(value) #new node "psych!"
+  if current.pointer != nil
+    new_node.pointer = current.pointer #"psych!"'s next node is b's next, c
+  end
+    current.pointer = new_node #b's next is "psych"
+end
+</code></pre>
+
+<p>Please note, that this method will not work if you want to insert a new note at the beginning of the linked list, for this your user should be directed to the unshift method.</p>
+
+<p>Now, onto the bigger questions:  Why would we want to use a linked list instead of an Array?</p>
+
+<p>Well, lets compare using a chart:</p>
+
+<p><img src="http://javaconceptoftheday.com/wp-content/uploads/2014/12/ArrayListVsLinkedList.png" alt="array vs. linked list" /></p>
+
+<p>And there you have it.  The hows and whys of linked lists.  Good luck on your next and all future interviews!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[What We Talk About When We Talk About Third Party API's]]></title>
@@ -511,29 +653,6 @@ variable_doc.css(" ").text
 
 
 <p><img src="https://thereadingwomb.files.wordpress.com/2011/07/jimmy-jet.gif" alt="Jimmy Jet and His TV Set" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The Beginning]]></title>
-    <link href="http://beccaades.github.io/blog/2015/06/07/my-first-post-on-octopress/"/>
-    <updated>2015-06-07T16:37:11-04:00</updated>
-    <id>http://beccaades.github.io/blog/2015/06/07/my-first-post-on-octopress</id>
-    <content type="html"><![CDATA[<p>  You woke up one day and realized you were ready to try something new.  Do something different.  You had taught for nine years: three countries, five schools, all ages, and (luckily!) you loved it.  You were absolutely happy.  You loved the purpose it gave you. The connections you made. The unbridled energy of Every. Single. Day.  You were never bored.  Never.</p>
-
-<p>  Until one day, it just didn’t work anymore. And you weren’t sure exactly why. You wished you had the answer, because then, maybe, you could have fixed it. It became harder and harder to keep at something, when the spark was gone.  Maybe it was all the testing.  Maybe it was the lack of services. Maybe it was the bureaucracy.  You can’t quite say&hellip;but it was time for something new.</p>
-
-<p>  You remember hearing that the average person switches their career 7 times, and here you were 31, and still doing the same thing?  Maybe it was all just an expiration date after all!  You remember learning about Steph, how she went to Flatiron, and was now working full time.  Wait.  You said.  She just went to school for three months and now has a job? Yes. WAIT.  For reals? AND she LOVES it.</p>
-
-<p>  You talked to people.  One girl had left an office job for a start up.  Her biggest regret was that her employers didn’t fire her so she could collect unemployment.  She told you to begin at codeacademy.  You did.  You felt like you were back in fifth grade when every morning began with a multiplication times tables.  Every student had 1 minute complete the questions, and if you got them all right, you got a sticker, and the next day you moved on to the next number.   You loved the certificates.  The emails congratulating you.  And you loved coding!</p>
-
-<p>  You took a class, you applied to some programs, you coded, and miraculously, you got into Flatiron!  You were so happy(cartwheels(!) and cartwheels(!))!  You had a new future.  Something exciting. Bright. And last week, you began.  You coded all week.  You learned how much you didn’t know.  You got help.  You stayed up too late, and finally, you managed to answer some of your own questions.  The error messages slowly made a little more sense.  And that’s where you are.  At the beginning.</p>
-
-<p>  I lied.</p>
-
-<p>  I said one day I woke up and wanted to try something new.  It didn’t happen like that.  It was a process.</p>
-
-<p>  There is no ready. set. go.  It’s not a gunshot and then you go off running into the distance like an antelope tearing up a glorious African sunset.  It’s a Sunday long run, slow footstep after slow footstep, building up the miles, so that one day, when that shot is fired, you will at the absolute least, know you prepared the very best you could.</p>
 ]]></content>
   </entry>
   
