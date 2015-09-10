@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Inheritance | A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/blog/categories/inheritance/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-09-10T14:14:10-04:00</updated>
+  <updated>2015-09-10T14:27:48-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -18,17 +18,17 @@
     <link href="http://beccaades.github.io/blog/2015/09/10/back-to-basics-how-everything-really-is-an-object-in-ruby/"/>
     <updated>2015-09-10T09:30:59-04:00</updated>
     <id>http://beccaades.github.io/blog/2015/09/10/back-to-basics-how-everything-really-is-an-object-in-ruby</id>
-    <content type="html"><![CDATA[<p>When I first started at Flatiron, I believed ruby was the language of choice because it was <em>simple</em>&ndash;I might have even gone so far as to call it <em>straightforward</em>. I didn&rsquo;t yet understand its eloquence&ndash;but I could, as a beginninger, tell that very quickly I was stumbling head-first into some pretty serious logic.  I liked that it made me immediately feel smart.  Like I was a real programmer!  How so?  <a href="https://github.com/beccaades">Check out my code</a>! And so, for the first part of the course, I missed the heart of the language itself.</p>
+    <content type="html"><![CDATA[<p>When I first started at Flatiron, I believed Ruby was the language of choice because of its <em>simplicity</em>&ndash;I might have even gone so far as to call it <em>straightforward</em>. I didn&rsquo;t yet understand its eloquence&ndash;but I could, as a beginninger, tell that very quickly I was stumbling head-first into some pretty serious logic.  I liked that it made me immediately feel smart.  Like I was a real programmer! And so, for the first part of the course, I missed the heart of the language itself.</p>
 
-<p>The heart.  The truth.  Ruby is alive, a world of objects, instances of Fixnum and String and Integer and a thousand other classes.</p>
+<p>The heart.  The truth. Ruby is alive: a world of objects, instances of Fixnum and String and Integer, and a thousand other classes upon which to build.</p>
 
-<p>They are all just objects.</p>
+<p>But they are all just objects.</p>
 
-<p>Sandi Metz believes we should get to know our objects.  We should talk to them. Ask them what they want, what they yearn for.  So today, I start at the basics.  <em>How is everything in Ruby an object?</em></p>
+<p>Sandi Metz believes we should get to know our objects.  We should talk to them. Ask them what they want, what they yearn for&hellip;so today, I start at the very beginning and ask myself:  <em>How is everything an object?</em></p>
 
-<p>For starters, every ruby object is an instance of some class.</p>
+<p>For starters, every Ruby object is an instance of some class.</p>
 
-<p>Classes earn their keep by providing two main functions:</p>
+<p>Classes earn their keep by providing two key functions:</p>
 
 <ol>
 <li>Being containers for methods.</li>
@@ -94,7 +94,7 @@ end
  =&gt; [:beans, :beans=, :count_beans, :lm, :lim, :nil?, :===, :=~, :!~, :eql?, :hash, :&lt;=&gt;, :class, :singleton_class, :clone, :dup, :itself, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?, :to_s, :inspect, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?, :remove_instance_variable, :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to?, :extend, :display, :method, :public_method, :singleton_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__] 
 </code></pre>
 
-<p>Hold the phone!  I thought this class only had 4 instance methods?  The ones listed earlier!  So what exacty is happening here?</p>
+<p>Wait a hot sec.  I thought this class only had 4 instance methods?  The ones listed earlier!  So what exacty is happening here?</p>
 
 <p>In Ruby if you can reference something with a variable&ndash;it&rsquo;s an object, and virtually all Ruby objects can trace their ancestry back to a Basic Object.</p>
 
