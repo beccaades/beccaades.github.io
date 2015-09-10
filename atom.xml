@@ -4,7 +4,7 @@
   <title><![CDATA[A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-09-10T12:05:49-04:00</updated>
+  <updated>2015-09-10T14:14:10-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -72,7 +72,7 @@
 <ol>
 <li>It can initialize a default empty array of beans when a new instance is created</li>
 <li>It can count how many beans it has</li>
-<li>It can return the objects assigned to @beans (through the instance method beans)</li>
+<li>It can return the object assigned to @beans (through the instance method beans)</li>
 <li>It can assign a new object to @beans (through the instance method beans=)</li>
 </ol>
 
@@ -110,6 +110,15 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>But we don&rsquo;t even need to go up to the class to know the instance methods because the object itself is an instance and knows its methods:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="n">my_beans</span> <span class="o">=</span> <span class="no">CoolBeans</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">methods</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:beans</span><span class="p">,</span> <span class="ss">:beans</span><span class="o">=</span><span class="p">,</span> <span class="ss">:count_beans</span><span class="p">,</span> <span class="ss">:lm</span><span class="p">,</span> <span class="ss">:lim</span><span class="p">,</span> <span class="ss">:nil?</span><span class="p">,</span> <span class="ss">:===</span><span class="p">,</span> <span class="p">:</span><span class="o">=~</span><span class="p">,</span> <span class="p">:</span><span class="o">!~</span><span class="p">,</span> <span class="ss">:eql?</span><span class="p">,</span> <span class="ss">:hash</span><span class="p">,</span> <span class="ss">:&lt;=&gt;</span><span class="p">,</span> <span class="ss">:class</span><span class="p">,</span> <span class="ss">:singleton_class</span><span class="p">,</span> <span class="ss">:clone</span><span class="p">,</span> <span class="ss">:dup</span><span class="p">,</span> <span class="ss">:itself</span><span class="p">,</span> <span class="ss">:taint</span><span class="p">,</span> <span class="ss">:tainted?</span><span class="p">,</span> <span class="ss">:untaint</span><span class="p">,</span> <span class="ss">:untrust</span><span class="p">,</span> <span class="ss">:untrusted?</span><span class="p">,</span> <span class="ss">:trust</span><span class="p">,</span> <span class="ss">:freeze</span><span class="p">,</span> <span class="ss">:frozen?</span><span class="p">,</span> <span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:inspect</span><span class="p">,</span> <span class="ss">:methods</span><span class="p">,</span> <span class="ss">:singleton_methods</span><span class="p">,</span> <span class="ss">:protected_methods</span><span class="p">,</span> <span class="ss">:private_methods</span><span class="p">,</span> <span class="ss">:public_methods</span><span class="p">,</span> <span class="ss">:instance_variables</span><span class="p">,</span> <span class="ss">:instance_variable_get</span><span class="p">,</span> <span class="ss">:instance_variable_set</span><span class="p">,</span> <span class="ss">:instance_variable_defined?</span><span class="p">,</span> <span class="ss">:remove_instance_variable</span><span class="p">,</span> <span class="ss">:instance_of?</span><span class="p">,</span> <span class="ss">:kind_of?</span><span class="p">,</span> <span class="ss">:is_a?</span><span class="p">,</span> <span class="ss">:tap</span><span class="p">,</span> <span class="ss">:send</span><span class="p">,</span> <span class="ss">:public_send</span><span class="p">,</span> <span class="ss">:respond_to?</span><span class="p">,</span> <span class="ss">:extend</span><span class="p">,</span> <span class="ss">:display</span><span class="p">,</span> <span class="ss">:method</span><span class="p">,</span> <span class="ss">:public_method</span><span class="p">,</span> <span class="ss">:singleton_method</span><span class="p">,</span> <span class="ss">:define_singleton_method</span><span class="p">,</span> <span class="ss">:object_id</span><span class="p">,</span> <span class="ss">:to_enum</span><span class="p">,</span> <span class="ss">:enum_for</span><span class="p">,</span> <span class="ss">:==</span><span class="p">,</span> <span class="ss">:equal?</span><span class="p">,</span> <span class="p">:</span><span class="o">!</span><span class="p">,</span> <span class="p">:</span><span class="o">!=</span><span class="p">,</span> <span class="ss">:instance_eval</span><span class="p">,</span> <span class="ss">:instance_exec</span><span class="p">,</span> <span class="ss">:__send__</span><span class="p">,</span> <span class="ss">:__id__</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <p>Hold the phone!  I thought this class only had 4 instance methods?  The ones listed earlier!  So what exacty is happening here?</p>
 
 <p>In Ruby if you can reference something with a variable&ndash;it&rsquo;s an object, and virtually all Ruby objects can trace their ancestry back to a Basic Object.</p>
@@ -131,7 +140,7 @@
 
 <p></p>
 
-<p>Hence, almost everything in Ruby is an object&ndash;which works out quite conveniently for us, because everything being an object and such, Ruby has given us a shared set of methods all objects have in common, re: the extra 50 or so instance methods available to the class that are not written in the code itself.</p>
+<p>Hence, almost everything in Ruby is an object&ndash;which works out quite conveniently for us, because everything being an object and such, Ruby has given us a shared set of methods all objects have in common, re: the extra 50 or so instance methods available to the class that are not written in the code itself, but rather inherited.</p>
 
 <p>Here are some common methods all objects have&ndash;and you should know them if for no other reason than to stay out of their way 😎.</p>
 
