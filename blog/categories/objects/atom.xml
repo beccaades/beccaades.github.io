@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Objects | A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/blog/categories/objects/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-09-10T11:57:30-04:00</updated>
+  <updated>2015-09-10T12:05:49-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -59,10 +59,12 @@ end
 <ol>
 <li>It can initialize a default empty array of beans when a new instance is created</li>
 <li>It can count how many beans it has</li>
-<li>It can read how many beans it had (through the attr_accessor)</li>
-<li>It can write(or add) more beans to the empty array (also through the attr_accessor)</li>
+<li>It can return the objects assigned to @beans (through the instance method beans)</li>
+<li>It can assign a new object to @beans (through the instance method beans=)</li>
 </ol>
 
+
+<p>(The third and fourth methods are created through my attr_accessor)</p>
 
 <p>But don&rsquo;t trust me!  Let&rsquo;s just ask the class what instance methods it has!</p>
 
