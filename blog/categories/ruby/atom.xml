@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ruby | A Coder's Journey]]></title>
+  <link href="http://beccaades.github.io/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://beccaades.github.io/"/>
+  <updated>2015-09-10T11:57:30-04:00</updated>
+  <id>http://beccaades.github.io/</id>
+  <author>
+    <name><![CDATA[Becca Ades]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Back to School & Back to Basics: How Everything Really IS an Object in Ruby]]></title>
+    <link href="http://beccaades.github.io/blog/2015/09/10/back-to-basics-how-everything-really-is-an-object-in-ruby/"/>
+    <updated>2015-09-10T09:30:59-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/09/10/back-to-basics-how-everything-really-is-an-object-in-ruby</id>
+    <content type="html"><![CDATA[<p>When I first started at Flatiron, I believed ruby was the language of choice because it was <em>simple</em>&ndash;I might have even gone so far as to call it <em>straightforward</em>. I didn&rsquo;t yet understand its eloquence&ndash;but I could, as a beginninger, tell that very quickly I was stumbling head-first into some pretty serious logic.  I liked that it made me immediately feel smart.  Like I was a real programmer!  How so?  <a href="https://github.com/beccaades">Check out my code</a>! And so, for the first part of the course, I missed the heart of the language itself.</p>
+
+<p>The heart.  The truth.  Ruby is alive, a world of objects, instances of Fixnum and String and Integer and a thousand other classes.</p>
+
+<p>They are all just objects.</p>
+
+<p>Sandi Metz believes we should get to know our objects.  We should talk to them. Ask them what they want, what they yearn for.  So today, I start at the basics.  <em>How is everything in Ruby an object?</em></p>
+
+<p>For starters, every ruby object is an instance of some class.</p>
+
+<p>Classes earn their keep by providing two main functions:</p>
+
+<ol>
+<li>Being containers for methods.</li>
+<li>Being factories for making instances.</li>
+</ol>
+
+
+<p>And every class <em>except one</em> has a superclass, someplace that class can turn to when someone calls a methods the class doesn&rsquo;t understand.</p>
+
+<p>Let&rsquo;s check it out by creating our very own CoolBeans class.</p>
+
+<pre><code class="ruby">class CoolBeans
+  attr_accessor :beans
+
+  def initialize
+    @beans = []
+  end
+
+  def count_beans
+    @beans.count
+  end 
+
+end
+</code></pre>
+
+<p>Just from looking at it, there are four readily apparent methods our class CoolBeans has:</p>
+
+<ol>
+<li>It can initialize a default empty array of beans when a new instance is created</li>
+<li>It can count how many beans it has</li>
+<li>It can read how many beans it had (through the attr_accessor)</li>
+<li>It can write(or add) more beans to the empty array (also through the attr_accessor)</li>
+</ol>
+
+
+<p>But don&rsquo;t trust me!  Let&rsquo;s just ask the class what instance methods it has!</p>
+
+<p>First&ndash;lets make an instance of the class:</p>
+
+<pre><code class="ruby">my_beans = CoolBeans.new
+ =&gt; #&lt;CoolBeans:0x007fe8abf516d0 @beans=[]&gt; 
+</code></pre>
+
+<p>This returns an object that is an instance of CoolBeans. Our object variable, @beans,(also known as an instance variable), is set to it&rsquo;s default value of an empty array upon initialization.</p>
+
+<p>Second-what class is this object exactly?</p>
+
+<pre><code class="ruby">my_beans.class
+ =&gt; CoolBeans 
+</code></pre>
+
+<p>Okay&ndash;so we knew that&hellip;but now, we can ask the class of this object, what instance methods it has:</p>
+
+<pre><code class="ruby">my_beans.class.instance_methods
+ =&gt; [:beans, :beans=, :count_beans, :lm, :lim, :nil?, :===, :=~, :!~, :eql?, :hash, :&lt;=&gt;, :class, :singleton_class, :clone, :dup, :itself, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?, :to_s, :inspect, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?, :remove_instance_variable, :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to?, :extend, :display, :method, :public_method, :singleton_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__] 
+</code></pre>
+
+<p>Hold the phone!  I thought this class only had 4 instance methods?  The ones listed earlier!  So what exacty is happening here?</p>
+
+<p>In Ruby if you can reference something with a variable&ndash;it&rsquo;s an object, and virtually all Ruby objects can trace their ancestry back to a Basic Object.</p>
+
+<pre><code class="ruby"> my_beans.class #find the class of the object my_beans
+ =&gt; CoolBeans 
+my_beans.class.superclass #find the superclass of my_beans
+ =&gt; Object 
+my_beans.class.superclass.superclass #finds the base class of almost everything in Ruby
+ =&gt; BasicObject 
+</code></pre>
+
+<p>Hence, almost everything in Ruby is an object&ndash;which works out quite conveniently for us, because everything being an object and such, Ruby has given us a shared set of methods all objects have in common, re: the extra 50 or so instance methods available to the class that are not written in the code itself.</p>
+
+<p>Here are some common methods all objects have&ndash;and you should know them if for no other reason than to stay out of their way 😎.</p>
+
+<pre><code class="ruby">instance_of?
+to_s
+public_methods
+instance_variables
+send
+</code></pre>
+
+<p>But one last thing!  Where did our initialize method go?  Why wasn&rsquo;t it listed in my instance methods?</p>
+
+<p>That is because instance_methods returns an array of public and protected methods.  However, initialize is always private.  To see it, we would have to do the following:</p>
+
+<pre><code class="ruby">my_beans.class.private_instance_methods
+ =&gt; [:initialize, :default_src_encoding, :irb_binding, :initialize_copy, :initialize_dup, :initialize_clone, :sprintf, :format, :Integer, :Float, :String, :Array, :Hash, :warn, :raise, :fail, :global_variables, :__method__, :__callee__, :__dir__, :eval, :local_variables, :iterator?, :block_given?, :catch, :throw, :loop, :respond_to_missing?, :trace_var, :untrace_var, :at_exit, :syscall, :open, :printf, :print, :putc, :puts, :gets, :readline, :select, :readlines, :`, :p, :test, :srand, :rand, :trap, :load, :require, :require_relative, :autoload, :autoload?, :proc, :lambda, :binding, :caller, :caller_locations, :exec, :fork, :exit!, :system, :spawn, :sleep, :exit, :abort, :Rational, :Complex, :set_trace_func, :gem, :gem_original_require, :singleton_method_added, :singleton_method_removed, :singleton_method_undefined, :method_missing] 
+</code></pre>
+
+<p>And there you have it.  Front and center.</p>
+
+<p>Cool beans.</p>
+]]></content>
+  </entry>
+  
+</feed>
