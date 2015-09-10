@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://beccaades.github.io/blog/2015/09/10/back-to-basics-how-everything-really-is-an-object-in-ruby/</loc>
+    <lastmod>2015-09-10T09:30:59-04:00</lastmod>
+  </url>
+  <url>
     <loc>http://beccaades.github.io/blog/2015/08/22/everything-is-a-balance-between-space-and-time-the-poetic-nature-of-linked-lists/</loc>
     <lastmod>2015-08-22T13:15:31-04:00</lastmod>
   </url>
@@ -60,9 +64,6 @@
   </url>
   <url>
     <loc>http://beccaades.github.io/blog/categories/open-uri/</loc>
-  </url>
-  <url>
-    <loc>http://beccaades.github.io/blog/categories/flatiron/</loc>
   </url>
   <url>
     <loc>http://beccaades.github.io/blog/categories/sinatra/</loc>

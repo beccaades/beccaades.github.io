@@ -4,7 +4,7 @@
   <title><![CDATA[A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-09-10T09:25:55-04:00</updated>
+  <updated>2015-09-10T11:55:29-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -12,6 +12,158 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Back to School & Back to Basics: How Everything Really IS an Object in Ruby]]></title>
+    <link href="http://beccaades.github.io/blog/2015/09/10/back-to-basics-how-everything-really-is-an-object-in-ruby/"/>
+    <updated>2015-09-10T09:30:59-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/09/10/back-to-basics-how-everything-really-is-an-object-in-ruby</id>
+    <content type="html"><![CDATA[<p>When I first started at Flatiron, I believed ruby was the language of choice because it was <em>simple</em>&ndash;I might have even gone so far as to call it <em>straightforward</em>. I didn&rsquo;t yet understand its eloquence&ndash;but I could, as a beginninger, tell that very quickly I was stumbling head-first into some pretty serious logic.  I liked that it made me immediately feel smart.  Like I was a real programmer!  How so?  <a href="https://github.com/beccaades">Check out my code</a>! And so, for the first part of the course, I missed the heart of the language itself.</p>
+
+<p>The heart.  The truth.  Ruby is alive, a world of objects, instances of Fixnum and String and Integer and a thousand other classes.</p>
+
+<p>They are all just objects.</p>
+
+<p>Sandi Metz believes we should get to know our objects.  We should talk to them. Ask them what they want, what they yearn for.  So today, I start at the basics.  <em>How is everything in Ruby an object?</em></p>
+
+<p>For starters, every ruby object is an instance of some class.</p>
+
+<p>Classes earn their keep by providing two main functions:</p>
+
+<ol>
+<li>Being containers for methods.</li>
+<li>Being factories for making instances.</li>
+</ol>
+
+
+<p>And every class <em>except one</em> has a superclass, someplace that class can turn to when someone calls a methods the class doesn&rsquo;t understand.</p>
+
+<p>Let&rsquo;s check it out by creating our very own CoolBeans class.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CoolBeans</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:beans</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>    <span class="vi">@beans</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">count_beans</span>
+</span><span class='line'>    <span class="vi">@beans</span><span class="o">.</span><span class="n">count</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Just from looking at it, there are four readily apparent methods our class CoolBeans has:</p>
+
+<ol>
+<li>It can initialize a default empty array of beans when a new instance is created</li>
+<li>It can count how many beans it has</li>
+<li>It can read how many beans it had (through the attr_accessor)</li>
+<li>It can write(or add) more beans to the empty array (also through the attr_accessor)</li>
+</ol>
+
+
+<p>But don&rsquo;t trust me!  Let&rsquo;s just ask the class what instance methods it has!</p>
+
+<p>First&ndash;lets make an instance of the class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">my_beans</span> <span class="o">=</span> <span class="no">CoolBeans</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="c1">#&lt;CoolBeans:0x007fe8abf516d0 @beans=[]&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This returns an object that is an instance of CoolBeans. Our object variable, @beans,(also known as an instance variable), is set to it&rsquo;s default value of an empty array upon initialization.</p>
+
+<p>Second-what class is this object exactly?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">my_beans</span><span class="o">.</span><span class="n">class</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="no">CoolBeans</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Okay&ndash;so we knew that&hellip;but now, we can ask the class of this object, what instance methods it has:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">my_beans</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">instance_methods</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:beans</span><span class="p">,</span> <span class="ss">:beans</span><span class="o">=</span><span class="p">,</span> <span class="ss">:count_beans</span><span class="p">,</span> <span class="ss">:lm</span><span class="p">,</span> <span class="ss">:lim</span><span class="p">,</span> <span class="ss">:nil?</span><span class="p">,</span> <span class="ss">:===</span><span class="p">,</span> <span class="p">:</span><span class="o">=~</span><span class="p">,</span> <span class="p">:</span><span class="o">!~</span><span class="p">,</span> <span class="ss">:eql?</span><span class="p">,</span> <span class="ss">:hash</span><span class="p">,</span> <span class="ss">:&lt;=&gt;</span><span class="p">,</span> <span class="ss">:class</span><span class="p">,</span> <span class="ss">:singleton_class</span><span class="p">,</span> <span class="ss">:clone</span><span class="p">,</span> <span class="ss">:dup</span><span class="p">,</span> <span class="ss">:itself</span><span class="p">,</span> <span class="ss">:taint</span><span class="p">,</span> <span class="ss">:tainted?</span><span class="p">,</span> <span class="ss">:untaint</span><span class="p">,</span> <span class="ss">:untrust</span><span class="p">,</span> <span class="ss">:untrusted?</span><span class="p">,</span> <span class="ss">:trust</span><span class="p">,</span> <span class="ss">:freeze</span><span class="p">,</span> <span class="ss">:frozen?</span><span class="p">,</span> <span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:inspect</span><span class="p">,</span> <span class="ss">:methods</span><span class="p">,</span> <span class="ss">:singleton_methods</span><span class="p">,</span> <span class="ss">:protected_methods</span><span class="p">,</span> <span class="ss">:private_methods</span><span class="p">,</span> <span class="ss">:public_methods</span><span class="p">,</span> <span class="ss">:instance_variables</span><span class="p">,</span> <span class="ss">:instance_variable_get</span><span class="p">,</span> <span class="ss">:instance_variable_set</span><span class="p">,</span> <span class="ss">:instance_variable_defined?</span><span class="p">,</span> <span class="ss">:remove_instance_variable</span><span class="p">,</span> <span class="ss">:instance_of?</span><span class="p">,</span> <span class="ss">:kind_of?</span><span class="p">,</span> <span class="ss">:is_a?</span><span class="p">,</span> <span class="ss">:tap</span><span class="p">,</span> <span class="ss">:send</span><span class="p">,</span> <span class="ss">:public_send</span><span class="p">,</span> <span class="ss">:respond_to?</span><span class="p">,</span> <span class="ss">:extend</span><span class="p">,</span> <span class="ss">:display</span><span class="p">,</span> <span class="ss">:method</span><span class="p">,</span> <span class="ss">:public_method</span><span class="p">,</span> <span class="ss">:singleton_method</span><span class="p">,</span> <span class="ss">:define_singleton_method</span><span class="p">,</span> <span class="ss">:object_id</span><span class="p">,</span> <span class="ss">:to_enum</span><span class="p">,</span> <span class="ss">:enum_for</span><span class="p">,</span> <span class="ss">:==</span><span class="p">,</span> <span class="ss">:equal?</span><span class="p">,</span> <span class="p">:</span><span class="o">!</span><span class="p">,</span> <span class="p">:</span><span class="o">!=</span><span class="p">,</span> <span class="ss">:instance_eval</span><span class="p">,</span> <span class="ss">:instance_exec</span><span class="p">,</span> <span class="ss">:__send__</span><span class="p">,</span> <span class="ss">:__id__</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hold the phone!  I thought this class only had 4 instance methods?  The ones listed earlier!  So what exacty is happening here?</p>
+
+<p>In Ruby if you can reference something with a variable&ndash;it&rsquo;s an object, and virtually all Ruby objects can trace their ancestry back to a Basic Object.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="n">my_beans</span><span class="o">.</span><span class="n">class</span> <span class="c1">#find the class of the object my_beans</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="no">CoolBeans</span>
+</span><span class='line'><span class="n">my_beans</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">superclass</span> <span class="c1">#find the superclass of my_beans</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="no">Object</span>
+</span><span class='line'><span class="n">my_beans</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">superclass</span><span class="o">.</span><span class="n">superclass</span> <span class="c1">#finds the base class of almost everything in Ruby</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="no">BasicObject</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Hence, almost everything in Ruby is an object&ndash;which works out quite conveniently for us, because everything being an object and such, Ruby has given us a shared set of methods all objects have in common, re: the extra 50 or so instance methods available to the class that are not written in the code itself.</p>
+
+<p>Here are some common methods all objects have&ndash;and you should know them if for no other reason than to stay out of their way 😎.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">instance_of?</span>
+</span><span class='line'><span class="nb">to_s</span>
+</span><span class='line'><span class="nb">public_methods</span>
+</span><span class='line'><span class="nb">instance_variables</span>
+</span><span class='line'><span class="nb">send</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But one last thing!  Where did our initialize method go?  Why wasn&rsquo;t it listed in my instance methods?</p>
+
+<p>That is because instance_methods returns an array of public and protected methods.  However, initialize is always private.  To see it, we would have to do the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">my_beans</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">private_instance_methods</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:initialize</span><span class="p">,</span> <span class="ss">:default_src_encoding</span><span class="p">,</span> <span class="ss">:irb_binding</span><span class="p">,</span> <span class="ss">:initialize_copy</span><span class="p">,</span> <span class="ss">:initialize_dup</span><span class="p">,</span> <span class="ss">:initialize_clone</span><span class="p">,</span> <span class="ss">:sprintf</span><span class="p">,</span> <span class="ss">:format</span><span class="p">,</span> <span class="ss">:Integer</span><span class="p">,</span> <span class="ss">:Float</span><span class="p">,</span> <span class="ss">:String</span><span class="p">,</span> <span class="ss">:Array</span><span class="p">,</span> <span class="ss">:Hash</span><span class="p">,</span> <span class="ss">:warn</span><span class="p">,</span> <span class="ss">:raise</span><span class="p">,</span> <span class="ss">:fail</span><span class="p">,</span> <span class="ss">:global_variables</span><span class="p">,</span> <span class="ss">:__method__</span><span class="p">,</span> <span class="ss">:__callee__</span><span class="p">,</span> <span class="ss">:__dir__</span><span class="p">,</span> <span class="ss">:eval</span><span class="p">,</span> <span class="ss">:local_variables</span><span class="p">,</span> <span class="ss">:iterator?</span><span class="p">,</span> <span class="ss">:block_given?</span><span class="p">,</span> <span class="ss">:catch</span><span class="p">,</span> <span class="ss">:throw</span><span class="p">,</span> <span class="ss">:loop</span><span class="p">,</span> <span class="ss">:respond_to_missing?</span><span class="p">,</span> <span class="ss">:trace_var</span><span class="p">,</span> <span class="ss">:untrace_var</span><span class="p">,</span> <span class="ss">:at_exit</span><span class="p">,</span> <span class="ss">:syscall</span><span class="p">,</span> <span class="ss">:open</span><span class="p">,</span> <span class="ss">:printf</span><span class="p">,</span> <span class="ss">:print</span><span class="p">,</span> <span class="ss">:putc</span><span class="p">,</span> <span class="ss">:puts</span><span class="p">,</span> <span class="ss">:gets</span><span class="p">,</span> <span class="ss">:readline</span><span class="p">,</span> <span class="ss">:select</span><span class="p">,</span> <span class="ss">:readlines</span><span class="p">,</span> <span class="ss">:`</span><span class="p">,</span> <span class="ss">:p</span><span class="p">,</span> <span class="ss">:test</span><span class="p">,</span> <span class="ss">:srand</span><span class="p">,</span> <span class="ss">:rand</span><span class="p">,</span> <span class="ss">:trap</span><span class="p">,</span> <span class="ss">:load</span><span class="p">,</span> <span class="ss">:require</span><span class="p">,</span> <span class="ss">:require_relative</span><span class="p">,</span> <span class="ss">:autoload</span><span class="p">,</span> <span class="ss">:autoload?</span><span class="p">,</span> <span class="ss">:proc</span><span class="p">,</span> <span class="ss">:lambda</span><span class="p">,</span> <span class="ss">:binding</span><span class="p">,</span> <span class="ss">:caller</span><span class="p">,</span> <span class="ss">:caller_locations</span><span class="p">,</span> <span class="ss">:exec</span><span class="p">,</span> <span class="ss">:fork</span><span class="p">,</span> <span class="ss">:exit!</span><span class="p">,</span> <span class="ss">:system</span><span class="p">,</span> <span class="ss">:spawn</span><span class="p">,</span> <span class="ss">:sleep</span><span class="p">,</span> <span class="ss">:exit</span><span class="p">,</span> <span class="ss">:abort</span><span class="p">,</span> <span class="ss">:Rational</span><span class="p">,</span> <span class="ss">:Complex</span><span class="p">,</span> <span class="ss">:set_trace_func</span><span class="p">,</span> <span class="ss">:gem</span><span class="p">,</span> <span class="ss">:gem_original_require</span><span class="p">,</span> <span class="ss">:singleton_method_added</span><span class="p">,</span> <span class="ss">:singleton_method_removed</span><span class="p">,</span> <span class="ss">:singleton_method_undefined</span><span class="p">,</span> <span class="ss">:method_missing</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>And there you have it.  Front and center.</p>
+
+<p>Cool beans.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Everything Is a Delicate Balance Between Space and Time: The Poetic Nature of Linked Lists]]></title>
