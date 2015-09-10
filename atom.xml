@@ -4,7 +4,7 @@
   <title><![CDATA[A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-08-22T15:02:52-04:00</updated>
+  <updated>2015-09-10T09:25:55-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -250,7 +250,7 @@ Please note, that this method will not work if you want to insert a new note at 
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="nb">open</span><span class="o">-</span><span class="n">uri</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">class</span> <span class="nc">InstagramWrapper</span>
 </span><span class='line'>
@@ -361,7 +361,7 @@ Please note, that this method will not work if you want to insert a new note at 
     <link href="http://beccaades.github.io/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis/"/>
     <updated>2015-07-29T21:35:09-04:00</updated>
     <id>http://beccaades.github.io/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis</id>
-    <content type="html"><![CDATA[<p><img src="http://thegreatgatsby.warnerbros.com/wp-content/uploads/2013/02/GG_downloads.jpg" alt="Great Gatsby" /></p>
+    <content type="html"><![CDATA[<p><img src="http://images7.alphacoders.com/419/419880.jpg" alt="Great Gatsby" /></p>
 
 <p><font color="blue"><em>“They were careless people, Tom and Daisy- they smashed up things and creatures and then retreated back into their money or their vast carelessness or whatever it was that kept them together, and let other people clean up the mess they had made.” &ndash;F. Scott Fitgerald</em></font></p>
 

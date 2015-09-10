@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Scraping | A Coder's Journey]]></title>
+  <link href="http://beccaades.github.io/blog/categories/scraping/atom.xml" rel="self"/>
+  <link href="http://beccaades.github.io/"/>
+  <updated>2015-09-10T09:25:55-04:00</updated>
+  <id>http://beccaades.github.io/</id>
+  <author>
+    <name><![CDATA[Becca Ades]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA["EXCUSE ME!!! My Computer Broke!"]]></title>
+    <link href="http://beccaades.github.io/blog/2015/06/21/excuse-me-my-computer-broke-again/"/>
+    <updated>2015-06-21T21:04:20-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/06/21/excuse-me-my-computer-broke-again</id>
+    <content type="html"><![CDATA[<p>There she goes. Again.</p>
+
+
+<p></p>
+
+<p><font color="red">#Shocking </font></p>
+
+
+<p></p>
+
+<p>It's always MY fault.  Like there's some sort of magic fairy dust sprinkled on <em>everyone else's</em> computer except *hers*. She even got an instructor to help her this time. Wow.  They are going to be in for a tasty treat--look what she put in!</p>
+
+
+<pre><code class="ruby">evil_pokemons.each do |pokemons|
+Pretty Please scrape the pokemons for me!!!!!
+end
+</code></pre>
+
+<p>Please. Tell me she's joking.</p>
+
+
+<p></p>
+
+<p>Oh Wait, Shhhh. This is going to be good! She was just asked if she read the Nokogiri tutorial.  SAY WHAT???? <em>She DID</em>?  She was on that website for .56 seconds.  <font color="red">#FACTS</font>. <em><strong>(PLEASE!!! JUST OPEN MY PAGES AND I WILL SPILL ALL! NO SNITCHES GET STICHES FOR ME!!!)</strong></em>.</p>
+
+
+
+
+<p>Deep breaths. Let's turn on this fan. Look, I mean, had she read it, she would've seen it's all really quite simple. You just give me a few, quick, straightforward commands at the top of your page, and I make like a shepherd and flock!</p>
+
+
+<pre><code class="ruby">require 'nokogiri'
+require 'open-uri'
+</code></pre>
+
+<p>You can even put these commands into irb to play around with, and I will set up your ENTIRE environment perfectly (just make sure I return "true" after each command).</p>
+
+
+<p></p>
+
+<P> Next, kindly let me know what language you would like to use (I'm <em>very</em> versatile), and for heaven's sake don't be lazy, name your document something fun--'doc' is just so uneventful.</p>
+
+
+<pre><code class="ruby">html = open('website').read
+doc_name = Nokogiri::HTML(html)
+</code></pre>
+
+<p>Now, you are at the part where you get to chillax.  Open up your browser by right clicking in crome on inspect element, and you should be able to use the nifty magnifying glass to help you locate any element's css selector you would like on the page.</p>
+
+
+
+
+<p>Once you've found the css selector of your desired element-try it out-I mean, you wouldn't buy a car without test driving it first, why should scraping be <em>any different</em>? Feel free to use binding.pry, a simple puts command, or the beautiful world of irb!</p>
+
+
+<pre><code class="ruby">variable_doc.search(" ").text
+variable_doc.css(" ").text
+</code></pre>
+
+<p>.search and .css mean the same thing, so don't cry your pretty little eyes out about that!  Once you've successfully matched the css selector to your element you are good to go and can head right back to your ruby program. Adding .text at the end returns--you guessed it--the text that your css selector selected!  I will take care of all the rest (like I ALWAYS do 😘).</p>
+
+
+<p><img src="https://thereadingwomb.files.wordpress.com/2011/07/jimmy-jet.gif" alt="Jimmy Jet and His TV Set" /></p>
+]]></content>
+  </entry>
+  
+</feed>

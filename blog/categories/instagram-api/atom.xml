@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Instagram-api | A Coder's Journey]]></title>
+  <link href="http://beccaades.github.io/blog/categories/instagram-api/atom.xml" rel="self"/>
+  <link href="http://beccaades.github.io/"/>
+  <updated>2015-09-10T09:25:55-04:00</updated>
+  <id>http://beccaades.github.io/</id>
+  <author>
+    <name><![CDATA[Becca Ades]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What We Talk About When We Talk About Third Party API's]]></title>
+    <link href="http://beccaades.github.io/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis/"/>
+    <updated>2015-07-29T21:35:09-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/07/29/what-we-talk-about-when-we-talk-about-third-party-apis</id>
+    <content type="html"><![CDATA[<p><img src="http://images7.alphacoders.com/419/419880.jpg" alt="Great Gatsby" /></p>
+
+<p><font color="blue"><em>“They were careless people, Tom and Daisy- they smashed up things and creatures and then retreated back into their money or their vast carelessness or whatever it was that kept them together, and let other people clean up the mess they had made.” &ndash;F. Scott Fitgerald</em></font></p>
+
+<p>If there was a metaphorical representation of a third party API, Leo would be it.</p>
+
+<p>Undoubtedly.</p>
+
+<p>The Great Gatsby.  Eternally eloquent, dazzling, sparkling, but somehow you can&rsquo;t help but feel that you were handed a big broken, mess, you need to JSON your way out of!</p>
+
+<p>APIs aren&rsquo;t exactly &ldquo;messy&rdquo; so to speak, in fact, they are quite the opposite, a careful, calculated way to access an <em>Application Programming Interface&rsquo;s</em> data&ndash;yet to someone interacting with an API for the first time, you can&rsquo;t help but be a bit messy, <font color="blue">&ldquo;careless&rdquo;</font> so to speak&ndash;in fact, it&rsquo;s completely necessary to understand how your API is working.</p>
+
+<p>This blog will attempt to give you the tools to wrecklessly and glamorously parse APIs.  Before you know it, you&rsquo;ll be flying over the Queensboro bridge, all of New York City in your view as you glide slowly but stylishly (cause you&rsquo;re in a hot car with a 12 cylinder engine 😎) headfirst into the city that never sleeps.</p>
+
+<p><img src="http://i.ytimg.com/vi/QoBGqtGBMLI/maxresdefault.jpg" alt="Cool Car" /></p>
+
+<p>First, it sounds obvious, but at times, we all need the obvious pointed out to us with exclamation marks!!!!!!! and &ndash;>arrows&lt;&ndash;.  LOUD AND CLEAR. Making an API call is simply accessing the correct URL for your desired data (well&hellip; you are also scraping the JSON located at a SPECIFIC website, but this is a good starting understanding.)</p>
+
+<p>Now, look up at the top of the screen. RIGHT NOW!  The url you are currently at is &ldquo;<a href="http://beccaades.github.io/what-we-talk-about-when-we-talk-about-third-party-apis">http://beccaades.github.io/what-we-talk-about-when-we-talk-about-third-party-apis</a>&rdquo;. This is where you come on the internet to read my blog about API&rsquo;s!</p>
+
+<p>Now for THE RULES:</p>
+
+<p><font color="red">1st RULE OF API&rsquo;s: READ THE DOCUMENTATION.</font></p>
+
+<p>The latest API I used, instagram, includes a developer page.  It tells you all the different endpoints you will need to access their data, and you can get to playing immediately, by placing the different queries in your browser.</p>
+
+<p>This is what they give you:</p>
+
+<pre><code class="ruby">https://api.instagram.com/v1/locations/search?lat=48.858844&amp;lng=2.294351&amp;access_token=ACCESS-TOKEN
+</code></pre>
+
+<p>This is what you do:</p>
+
+<pre><code class="ruby">https://api.instagram.com/v1/locations/search?lat=40.7577&amp;lng=-73.9857&amp;access_token=ACCESS-TOKEN
+</code></pre>
+
+<p>And <font color="red">this</font> is what you get:</p>
+
+<pre><code class="ruby">{
+meta: {
+code: 200
+},
+data: [
+{
+latitude: 40.757696,
+id: "5106788",
+longitude: -73.985716,
+name: "Swatch"
+},
+{
+latitude: 40.75770595,
+id: "877266653",
+longitude: -73.985676,
+name: "Espn - Abc Studio Times Square"
+},
+{
+latitude: 40.7576833,
+id: "5012142",
+longitude: -73.9857171,
+name: "Times Square"
+},
+{
+latitude: 40.757692657,
+id: "242689896",
+longitude: -73.985731602,
+name: "Black Bar &amp; Loungue"
+},
+</code></pre>
+
+<p>(SIDENOTE: Please don&rsquo;t be a dummy and know that you will have to actually replace the access token with your own.)</p>
+
+<p>To access this information you can treat the JSON like a hash. Let&rsquo;s say we set this equal to the variable data_hash.  If I wanted to access &ldquo;Swatch,&rdquo; I could enter data_hash[:data][0][:name]and it would return &ldquo;Swatch&rdquo; back to me.</p>
+
+<p><font color="red">2nd RULE OF API&rsquo;s: PLAY!!</font></p>
+
+<p>Now.  Listen close.  I have a little gem to share with you.  The httpary gem to be exact.</p>
+
+<p>This gem lets you get down to business quickly by simply requiring it and then gaining direct access to JSON in the API to your app, to gain both familiarity and explore potential methods for your classes.</p>
+
+<p>To use the httparty gem you simply require it in your gem file.  Then in your model, your require the gem like so:</p>
+
+<pre><code class="ruby">class InstagramWrapper
+
+  require 'httparty'
+
+  response = HTTPARTY.get("https://api.instagram.com/v1/media/search?lat=40.7577&amp;lng=73.9857&amp;distance=1000&amp;access_token=access_token")
+
+end
+</code></pre>
+
+<p>You can then begin by binding into the respond and deciding what information you need and begin to structure your methods.</p>
+
+<p><font color="red">3rd RULE OF API&rsquo;s: ASK THE API&rsquo;s WHAT METHODS THEY HAVE</font></p>
+
+<p>Once you are able to access the JSON, don&rsquo;t be afraid to ask the API exactly what methods they have! They may just tickle your fancy with some extra methods that they don&rsquo;t discuss in the documentation.  For example, the only way, I was able to learn about instagram&rsquo;s nifty tag_count feature was through directly asking instagram what methods they have (rails console, baby!) and I got this quite lovely response (amongy MANY many others).</p>
+
+<pre><code class="ruby">=&gt; [:client,
+ :get_count_for_tag,
+ :get_tourist_instagrams
+</code></pre>
+
+<p>I simply did this by entering the following into my console:</p>
+
+<pre><code class="ruby">tell_me_the_methods_baby = InstagramWrapper.new
+tell_me_the_methods_baby.methods?
+</code></pre>
+
+<p>How wonderfully convenient.</p>
+
+<p><font color="red">4th RULE OF API&rsquo;s: WRAP THE API&rsquo;S METHODS IN YOUR OWN INSTANCE METHODS</font></p>
+
+<p>Once you have found the desired method, it is time to wrap it in an instance method.  For example the instagram tag count method could be wrapped as such: </p>
+
+
+<pre><code class="ruby">  def get_count_for_tag(tag)
+    results = client.tag_search(tag)
+    results.collect {|result| result["media_count"]}.first
+  end
+</code></pre>
+
+<p>  Results for the tag &ldquo;HTTparty&rdquo; gives you back :</p>
+
+<pre><code class="ruby">=&gt; 8.0
+</code></pre>
+
+<p>Sad toast.</p>
+
+<p>The people of instagram are definitely missing out.</p>
+
+<p>And there you have it.  A step by step guide to deconstruct the many faces third party API&rsquo;s may bring us.  Cheers to that!</p>
+]]></content>
+  </entry>
+  
+</feed>

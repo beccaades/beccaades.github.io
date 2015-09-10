@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Api-wrappers | A Coder's Journey]]></title>
+  <link href="http://beccaades.github.io/blog/categories/api-wrappers/atom.xml" rel="self"/>
+  <link href="http://beccaades.github.io/"/>
+  <updated>2015-09-10T09:25:55-04:00</updated>
+  <id>http://beccaades.github.io/</id>
+  <author>
+    <name><![CDATA[Becca Ades]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Object = 'What We Talk About When We Talk About Third Party API's'.new]]></title>
+    <link href="http://beccaades.github.io/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis/"/>
+    <updated>2015-08-16T14:53:29-04:00</updated>
+    <id>http://beccaades.github.io/blog/2015/08/16/extend-what-we-talk-about-when-we-talk-about-third-part-apis</id>
+    <content type="html"><![CDATA[<p>I ended my last post stating you should wrap your desired API&rsquo;s methods in your own instance methods. While this is true, I left out the whole <strong><em>why</em></strong> of it all. How dare I!</p>
+
+<p>Allow me, to give you a hint&hellip;</p>
+
+<p><img class="center <a" src="href="http://vision.stanford.edu/lijiali/JiaLi_files/ObjectBank.jpg">http://vision.stanford.edu/lijiali/JiaLi_files/ObjectBank.jpg</a>"></p>
+
+<p>You see, everything, and I do mean <font color="red"> EVERYTHING(!) </font> in Ruby is an object, including our dear complicated API&rsquo;s.</p>
+
+<p>Without further ado, I&rsquo;d like to introduce you to my API object:</p>
+
+<pre><code class="ruby">require 'open-uri'
+
+class InstagramWrapper
+
+end
+</code></pre>
+
+<p>You may have noticed that I required open-uri.  Using this is an easy-to-use wrapper for net/http, net/https, and net/ftp, and is included in the ruby standard library, meaning, if you are in a rails app, you do not need to require open-uri.</p>
+
+<p>Now, because we are dealing with the instagram API call, itself&ndash;as an object&ndash;we need to initialize it and that means, we need to ask ourselves some seriously <em> existential </em> questions.</p>
+
+<p><img src="http://static.architexturez.net/cdn/farfuture/kt9R9ega7jrYrCCjtFOQxFyVKbDHSiqBfTR6-HPoS-8/mtime:1438953286/data/styles/az_cf_core_l-region-content/public/media//margritti-not-pipe.jpg" alt="This is not a pipe" /></p>
+
+<p><strong> What makes an API call an API call? </strong></p>
+
+<p>&hellip;or, in less abstract terms,<em> what exactly does an API call need to be an API call?</em></p>
+
+<p>This depends on what kind of API call you are making.</p>
+
+<p>If you want to make a call on behalf of a user, chances are, you will need to use OAuth, to get permission to user the user&rsquo;s specific id.  If you just want to get the result for a certian tag search or really, anything unrelated to a specific user, you will more than likely, not need the user to authorize, your application.  For the purposes of this tutorial, let&rsquo;s say you just want to get all the instagrams for a specific tag search.</p>
+
+<p>To bring our API call to life we need to initialize the client_id (a key you get by registering your application with instagram).</p>
+
+<pre><code class="ruby">class InstagramWrapper
+  attr_accessor :client
+
+  def initialize
+    @client = Instagram.client(:client_id =&gt; ENV["INSTAGRAM_CLIENT_ID"])
+  end
+
+end
+</code></pre>
+
+<p>Now you can go into your rails console and type:</p>
+
+<pre><code class="ruby">playing_with_my_new_api_class = InstagramWrapper.new
+</code></pre>
+
+<p>Which will return the InstagramWrapper object, the API call itself. Don&rsquo;t be shy. Ask what methods are available to you:</p>
+
+<pre><code class="ruby">playing.methods
+</code></pre>
+
+<p>And the first one is client.  Keep asking questions (They keep you young at heart<font color="red"> ❤️ </font>).</p>
+
+<pre><code class="ruby">playing.client.methods
+</code></pre>
+
+<p>And there it is!!!!<em><strong> tag_search</strong></em>(<font color="red">!!!!</font>).  Just do it.</p>
+
+<pre><code class="ruby">playing.client.tag_search("everythingsanobject")
+</code></pre>
+
+<p>One smart cookie has tagged this.  Neat-o.  Lets add this method to our Instagram API object.</p>
+
+<pre><code class="ruby">class InstagramWrapper
+  attr_accessor :client
+
+  def initialize
+    @client = Instagram.client(:client_id =&gt; ENV["INSTAGRAM_CLIENT_ID"])
+  end
+
+  def number_of_tags(tag)
+    client.tag_search(tag)
+  end
+end
+</code></pre>
+
+<p>And there you have it.  Your very own, fully functional API object tightly wrapped in a InstagramWrapper class.</p>
+
+<p> <img src="http://images.clipartpanda.com/birthday-20clipart-colorful_kids_birthday_present.png" alt="Present" /></p>
+
+<p>You&rsquo;re welcome.</p>
+]]></content>
+  </entry>
+  
+</feed>
