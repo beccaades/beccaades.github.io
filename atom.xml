@@ -4,7 +4,7 @@
   <title><![CDATA[A Coder's Journey]]></title>
   <link href="http://beccaades.github.io/atom.xml" rel="self"/>
   <link href="http://beccaades.github.io/"/>
-  <updated>2015-09-10T14:27:48-04:00</updated>
+  <updated>2015-10-22T12:33:59-04:00</updated>
   <id>http://beccaades.github.io/</id>
   <author>
     <name><![CDATA[Becca Ades]]></name>
@@ -90,7 +90,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This returns an object that is an instance of CoolBeans. Our object variable, @beans,(also known as an instance variable), is set to it&rsquo;s default value of an empty array upon initialization.</p>
+<p>This returns an object that is an instance of CoolBeans. Our object variable, @beans,(also known as an instance variable), is set to its default value of an empty array upon initialization.</p>
 
 <p>Second-what class is this object exactly?</p>
 
@@ -425,7 +425,7 @@ Please note, that this method will not work if you want to insert a new note at 
 
 <p>Now, because we are dealing with the instagram API call, itself&ndash;as an object&ndash;we need to initialize it and that means, we need to ask ourselves some seriously <em> existential </em> questions.</p>
 
-<p><img src="http://static.architexturez.net/cdn/farfuture/kt9R9ega7jrYrCCjtFOQxFyVKbDHSiqBfTR6-HPoS-8/mtime:1438953286/data/styles/az_cf_core_l-region-content/public/media//margritti-not-pipe.jpg" alt="This is not a pipe" /></p>
+<p><img src="http://plaza.ufl.edu/chrisufl/not%20a%20pipe.jpg" alt="This is not a pipe" /></p>
 
 <p><strong> What makes an API call an API call? </strong></p>
 
